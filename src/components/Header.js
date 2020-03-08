@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import logoPng from "../img/logo.png";
 import Menu from "./Menu";
+// import BookingField from "./BookingField";
+import RegistrationForm from "./RegistrationForm";
 
 import "../style/header-container.less";
+import { Button } from "../style/custom-components/Button";
 
 const HeaderContainer = styled.div`
     display: flex;
+    z-index: 3;
     width: 100%;
     box-sizing: border-box;
     position: fixed;
     background: none;
-    padding: 30px;
+    padding: 10px;
 
     ${({ block }) => block && `
         background: black;
@@ -19,25 +23,16 @@ const HeaderContainer = styled.div`
     `}
 `;
 
-const BookButton = styled.button`
-    border: none;
-    margin-left: 50px;
-    background: none;
-    font-family: Century Gothic;
-    text-transform: uppercase;
-    color: black;
-
-    ${({ block }) => block && `
-        color: #b1a2a2;
-    `}
-`;
-
 export default function Header({ currentMenu }) {
     const [isBlockMenu, setIsBlockMenu] = useState(false);
+    const [isOpenBookingForm, setIsOpenBookingForm] = useState(false);
+
+    const openBookingForm = useCallback(() => {
+        setIsOpenBookingForm(!isOpenBookingForm);
+    }, [isOpenBookingForm]);
 
     const handleScroll = () => {
-        console.log(window.innerHeight + window.pageYOffset);
-        if (window.innerHeight + window.pageYOffset < 1200) {
+        if (window.innerHeight + window.pageYOffset < 1050) {
             setIsBlockMenu(false);
 
             return;
@@ -58,7 +53,12 @@ export default function Header({ currentMenu }) {
             </div>
             <Menu content={currentMenu} />
 
-            <BookButton block={isBlockMenu}>book now</BookButton>
+            <Button block={isBlockMenu} onClick={openBookingForm}>book now</Button>
+            {
+                isOpenBookingForm ? (
+                    <RegistrationForm />
+                ) : null
+            }
         </HeaderContainer>
     );
 }

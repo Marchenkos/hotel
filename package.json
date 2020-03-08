@@ -1,7 +1,6 @@
 {
-    "name": "youtube_videos_search",
+    "name": "hotel",
     "version": "1.0.0",
-    "description": "A web app to view information about Youtube videos.",
     "main": "index.js",
     "scripts": {
         "test": "jest",
@@ -10,18 +9,11 @@
         "build": "webpack --mode production",
         "lint": "eslint src/ --fix"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Marchenkos/YouTube_Videos_Search.git"
-    },
     "author": "",
     "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/Marchenkos/YouTube_Videos_Search/issues"
-    },
-    "homepage": "https://github.com/Marchenkos/YouTube_Videos_Search#readme",
     "dependencies": {
         "@testing-library/react-hooks": "^3.2.1",
+        "axios": "^0.19.2",
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.15.1",
         "enzyme-to-json": "^3.4.2",
@@ -30,6 +22,7 @@
         "jest": "^24.9.0",
         "jest-enzyme": "^7.1.1",
         "jest-extended": "^0.11.2",
+        "jquery": "^3.4.1",
         "lodash.debounce": "^4.0.8",
         "prop-types": "^15.7.2",
         "react": "^16.10.2",
