@@ -1,0 +1,13 @@
+.grid__item {
+    width: 500px;
+    overflow: hidden;
+}
+
+img.item__maket {
+    width: 100%;
+}
+
+.main-container__grid {
+    display: flex;
+    flex-wrap: wrap;
+}

@@ -1,0 +1,36 @@
+.capcha {
+    display: flex;
+    justify-content: center;
+    background-image: url(../img/capcha.png);
+    align-items: baseline;
+    width: 185px;
+    height: 80px;
+    margin: 0 auto;
+}
+
+.capcha-block {
+    /* display: flex; */
+    margin-bottom: 20px;
+    /* justify-content: space-between; */
+    /* align-items: flex-end; */
+}
+
+.capcha__operand {
+    /* width: 66px; */
+    text-align: center;
+    border: none;
+    background: none;
+    color: rgb(24, 24, 24);
+    font-family: capcha;
+    font-size: 30px;
+}
+
+.capcha__operator {
+    color: rgb(24, 24, 24);
+    font-family: capcha;
+    font-size: 30px;
+}
+
+.capcha__result {
+    width: 185px;
+}

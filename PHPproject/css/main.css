@@ -1,0 +1,40 @@
+
+.main-container {
+    width: 60%;
+    margin: 10px auto;
+}
+
+.main-container__title {
+    margin: 105px auto 50px;
+    text-align: center;
+}
+
+.main-container__description {
+    width: 500px;
+    margin: 0 auto;
+    font-size: 35px;
+    color: #545454;
+    text-align: center;
+}
+
+.main-container__form {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    margin: 30px auto;
+    width: 300px;
+}
+
+input.submit-button {
+    margin: 20px auto;
+    background: #e3f0ef;
+    border-radius: 5px;
+    width: 160px;
+}
+
+li {
+    text-decoration: none;
+    margin: 10px;
+    font-size: 24px;
+}
+
