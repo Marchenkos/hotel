@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import * as $ from "jquery";
 
 import "../style/regist-form.less";
-import "../style/contant-container.less";
 import { Button } from "../style/custom-components/Button";
 import { Input } from "../style/custom-components/Input";
 import { Form } from "../style/custom-components/Form";
@@ -25,10 +24,10 @@ export default function RegistrationForm() {
             return;
         }
 
-        const url = "http://projecthotel/register.php";
+        const url = "http://projecthotel:8080/register.php";
 
         const registerData = {
-            login: loginRef.current.value,
+            user: loginRef.current.value,
             name: nameRef.current.value,
             lastName: lastNameRef.current.value,
             birthday: birthdayRef.current.value,
@@ -45,19 +44,9 @@ export default function RegistrationForm() {
                 regData: JSON.stringify(registerData)
             },
             success: response => {
-                console.log(response.result);
+                console.log(response.result[0]);
             }
         });
-
-        // $.ajax({
-        //     type: "POST",
-        //     url,
-        //     dataType: "json",
-        //     data: $(".formLALA").serialize(),
-        //     success: response => {
-        //         console.log(response.result);
-        //     }
-        // });
     };
 
     return (

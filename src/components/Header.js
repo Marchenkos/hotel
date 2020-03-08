@@ -3,7 +3,7 @@ import styled from "styled-components";
 import logoPng from "../img/logo.png";
 import Menu from "./Menu";
 // import BookingField from "./BookingField";
-import RegistrationForm from "./RegistrationForm";
+import UserForm from "./UserForm";
 
 import "../style/header-container.less";
 import { Button } from "../style/custom-components/Button";
@@ -56,7 +56,7 @@ export default function Header({ currentMenu }) {
             <Button block={isBlockMenu} onClick={openBookingForm}>book now</Button>
             {
                 isOpenBookingForm ? (
-                    <RegistrationForm />
+                    <UserForm />
                 ) : null
             }
         </HeaderContainer>
