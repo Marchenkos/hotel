@@ -2,7 +2,9 @@ import React, { useRef } from "react";
 import * as $ from "jquery";
 
 import "../style/regist-form.less";
-import { Button } from "../style/custom-components/Button";
+import "../style/slider.less";
+
+import { FormButton } from "../style/custom-components/Button";
 import { Input } from "../style/custom-components/Input";
 import { Form } from "../style/custom-components/Form";
 
@@ -24,7 +26,7 @@ export default function RegistrationForm() {
             return;
         }
 
-        const url = "http://projecthotel:8080/register.php";
+        const url = "http://projecthotel/register.php";
 
         const registerData = {
             user: loginRef.current.value,
@@ -52,14 +54,19 @@ export default function RegistrationForm() {
     return (
         <div className="regist-form">
             <Form className="formLALA">
-                <Input className="form__input" placeholder="login" name="login" ref={loginRef} />
-                <Input className="form__input" placeholder="name" name="userName" ref={nameRef} />
-                <Input className="form__input" placeholder="lastName" name="lastName" ref={lastNameRef} />
-                <Input className="form__input" placeholder="email" name="email" ref={emailRef} />
-                <Input className="form__input" placeholder="birthday" name="birthday" ref={birthdayRef} />
-                <Input className="form__input" type="password" name="password" placeholder="password" ref={passwordRef} />
-
-                <Button type="submit" onClick={onsubmitForm} inForm>Submit</Button>
+                <div className="slider">
+                    <section className="slider__item">
+                        <Input className="form__input" placeholder="login" name="login" ref={loginRef} />
+                        <Input className="form__input" placeholder="name" name="userName" ref={nameRef} />
+                        <Input className="form__input" placeholder="lastName" name="lastName" ref={lastNameRef} />
+                    </section>
+                    <section className="slider__item">
+                        <Input className="form__input" placeholder="email" name="email" ref={emailRef} />
+                        <Input className="form__input" placeholder="birthday" name="birthday" ref={birthdayRef} />
+                        <Input className="form__input" type="password" name="password" placeholder="password" ref={passwordRef} />
+                    </section>
+                </div>
+                <FormButton type="submit" onClick={onsubmitForm} inForm>Registration</FormButton>
             </Form>
         </div>
     );

@@ -13,7 +13,7 @@ export default function RoomCatalog() {
     const [roomsId, setRoomsId] = useState([]);
 
     useEffect(() => {
-        const url = "http://projecthotel:8080/getAllRooms.php";
+        const url = "http://projecthotel/getAllRooms.php";
 
         $.ajax({
             type: "POST",

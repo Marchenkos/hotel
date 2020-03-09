@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import * as $ from "jquery";
 
 import "../style/regist-form.less";
-import { Button } from "../style/custom-components/Button";
+import { FormButton } from "../style/custom-components/Button";
 import { Input } from "../style/custom-components/Input";
 import { Form } from "../style/custom-components/Form";
 
@@ -47,7 +47,7 @@ export default function AuthForm() {
                 <Input className="form__input" type="password" name="password" placeholder="password" ref={passwordRef} />
                 <Input className="form__input" type="password" name="password" placeholder="Confirm password" ref={duplicatePassword} />
 
-                <Button type="submit" onClick={onsubmitForm} inForm>sing in</Button>
+                <FormButton type="submit" onClick={onsubmitForm} inForm>log in</FormButton>
             </Form>
         </div>
     );

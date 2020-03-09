@@ -15,7 +15,6 @@ const HeaderContainer = styled.div`
     box-sizing: border-box;
     position: fixed;
     background: none;
-    padding: 10px;
 
     ${({ block }) => block && `
         background: black;
@@ -53,10 +52,13 @@ export default function Header({ currentMenu }) {
             </div>
             <Menu content={currentMenu} />
 
-            <Button block={isBlockMenu} onClick={openBookingForm}>book now</Button>
+            <Button block={isBlockMenu} onClick={openBookingForm} header>book now</Button>
             {
                 isOpenBookingForm ? (
-                    <UserForm />
+                    <>
+                        <div className="modal" />
+                        <UserForm closeModal={openBookingForm} />
+                    </>
                 ) : null
             }
         </HeaderContainer>

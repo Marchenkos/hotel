@@ -6,6 +6,7 @@ export const Input = styled.input`
     flex-basis: 80%;
     border: 1px solid #c9c8c8;
     font-size: 15px;
+    height: 30px;
     font-family: Century Gothic;
     text-transform: uppercase;
     padding: 10px;

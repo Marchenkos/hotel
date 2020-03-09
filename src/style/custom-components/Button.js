@@ -14,8 +14,8 @@ export const Button = styled.button`
         color: #b1a2a2;
     `}
 
-    ${({ inForm }) => inForm && `
-        margin-top: 10px;
+    ${({ header }) => header && `
+        flex-basis: 15%;
     `}
 
     ${({ pos }) => pos && `
@@ -44,9 +44,19 @@ export const FormButton = styled.button`
     cursor: pointer;
     outline: none;
 
+    ${({ inForm }) => inForm && `
+        flex-basis: 50%;
+    `}
+
     ${({ choosed }) => choosed && `
         border-bottom: px solid blue;
         bottom: 20px;
         color: white;
+    `}
+
+    
+    ${({ last }) => last && `
+        flex-grow: 2;
+        text-align: end;
     `}
 `;
