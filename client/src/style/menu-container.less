@@ -1,0 +1,58 @@
+@import "./auth-block.less";
+
+@mobile: 320px;
+@tablet: 700px;
+@desktop: 1000px;
+
+@text: {
+    font-family: Didot;
+    text-transform: uppercase;
+};
+
+.menu-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+
+    @media (max-width: @tablet) {
+        background: #000000;
+    }
+
+    .menu {
+        display: flex;
+        @text();
+        padding-left: 20px;
+    
+        @media (max-width: @desktop) {
+            font-size: 13px;
+        }
+    
+        @media (max-width: @tablet) {
+            font-size: 13px;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            background: #000000;
+            height: 250px;
+        }
+    
+        @media (min-width: @desktop) {
+            flex-direction: row;
+            font-size: 15px;
+        }
+    
+        .menu__item {
+            margin: 10px 15px;
+            color:white;
+            outline: none;
+            text-decoration: none;
+            @baseButtontStyles();
+
+            @media (max-width: @tablet) {
+                color: white;
+                padding-top: 30px;
+            }
+        }
+    }
+}

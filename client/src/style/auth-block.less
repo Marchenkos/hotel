@@ -1,0 +1,29 @@
+@tablet: 700px;
+
+@baseButtontStyles: {
+    border: none;
+    font-family: Century Gothic;
+    text-transform: uppercase;
+    cursor: pointer;
+    outline: none;
+}
+
+@color: #462c2c;
+@color-dark: darken(@color, 10%);
+
+.auth-button {
+    @baseButtontStyles();
+
+    background: @color;
+    font-size: 13px;
+    color: black;
+    color: #cfb9b9;
+
+    &:active {
+        background: @color-dark;
+    }
+
+    @media (max-width: @tablet) {
+        padding: 7px 0;
+    }
+}

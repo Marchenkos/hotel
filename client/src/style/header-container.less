@@ -1,0 +1,39 @@
+@tablet: 700px;
+
+.header-container {
+    display: flex;
+    z-index: 3;
+    width: 100%;
+    position: fixed;
+
+    height: 60px;
+    top: 0;
+    left: 0;
+
+    @media (max-width: @tablet) {
+        background: #000000;
+    }
+
+    .header-container__logo {
+        z-index: 4;
+        position: absolute;
+
+        .logo {
+            max-width: 45px;
+            margin: 5px 20px;
+        }
+    }
+
+    .menu-container__mobile-button {
+        z-index: 4;
+        position: absolute;
+        color: #6d6d6d;
+        right: 15px;
+        top: 13px;
+        font-size: 30px;
+
+        @media (min-width: @tablet) {
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,62 @@
+@cellStandart: {
+    flex-basis: 12%;
+    font-size: 15px;
+    height: 40px;
+    text-align: center;
+    padding: 10px 3px;
+    box-sizing: border-box;
+    margin: 2px;
+}
+body{
+    background: none;
+}
+
+.calendar-container__button-container {
+    display: flex;
+    justify-content: flex-start;
+
+    .button-container__first {
+        flex-grow: 1;
+    }
+}
+
+.calendar-slide-container {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+
+    .slide-cell {
+        @cellStandart();
+        background: #ffffff;
+        cursor: pointer;
+        color: #000000;
+
+        &:hover {
+            background: #e9e7e7;
+        }
+    }
+
+    .slide-cell__choosed {
+        @cellStandart();
+        background: #95d37d;
+    }
+
+    .slide-cell__booked {
+        @cellStandart();
+        background: #e66a6a;
+    }
+
+    .slide-cell__blocked {
+        @cellStandart();
+        background: #c9c7c7;
+    }
+
+    .calendar-slide-container__title {
+        font-family: Century Gothic;
+        text-transform: uppercase;
+        height: 30px;
+        position: absolute;
+        top: -30px;
+        right: 55%;
+    }
+}

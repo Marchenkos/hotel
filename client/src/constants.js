@@ -1,0 +1,36 @@
+export const constants = {
+    auth: "AUTH",
+    reg: "REG",
+    monthName: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ],
+    errorMessage: [
+        "Fill all fields please",
+        "Passwords don't match",
+        "Log in please",
+        "Success",
+        "No correct login or password",
+        "No correct data",
+    ],
+    ACTIVE_MODAL: "modal active",
+    ACTIVE_MODAL_OVERLAY: "modal-overlay active",
+    HIDE_MODAL: "modal",
+    HIDE_MODAL_OVERLAY: "modal-overlay",
+    TABLET_WIDTH: 700,
+    DEVICE_SIZE: {
+        mobile: "(max-width: 400px)",
+        tablet: "(max-width: 1000px)",
+        desktop: "(min-width: 1000px)",
+    },
+};

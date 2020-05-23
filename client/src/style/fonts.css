@@ -1,0 +1,29 @@
+@font-face {
+    font-family: icomoon;
+    src: url(./fonts/fonts/icomoon.ttf);
+}
+
+@font-face {
+    font-family: Helvetica Grumov;
+    src: url(./fonts/Helvetica_Grumov.ttf);
+}
+
+@font-face {
+    font-family: Didot;
+    src: url(./fonts/didot-htf-m42-medium.ttf);
+}
+
+@font-face {
+    font-family: Lato Light;
+    src: url(./fonts/Lato-Light.ttf);
+}
+
+@font-face {
+    font-family: Lato;
+    src: url(./fonts/Lato-Regular.ttf);
+}
+
+@font-face {
+    font-family: Bodidota;
+    src: url(./fonts/Bodidota.ttf);
+}
