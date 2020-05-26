@@ -35,8 +35,11 @@ export default function RoomCard({ status, description, square, roomId }) {
             <hr className="room__separation" />
 
             <div className="room-card">
-                <div className="room-card__slider">
-                    <img src={roomsImg[roomId - 1]} alt="catalog" className="welcom-block__picture" />
+                <div className="room-card__title">
+                    {status[0].toUpperCase() + status.slice(1)}
+                </div>
+                <div className="room-card__img">
+                    <img src={roomsImg[roomId - 1]} alt="room-picture" className="img-room" />
                 </div>
 
                 <div className="room-card__text-block">

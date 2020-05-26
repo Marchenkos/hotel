@@ -2,3 +2,7 @@ body{
     background: none;
     min-width: 360px;
 }
+
+#root {
+    height: 100vh;
+}

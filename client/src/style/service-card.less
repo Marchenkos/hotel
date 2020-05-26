@@ -1,25 +1,37 @@
+@import "./constants.less";
+
 .service-card {
     display: flex;
     flex-direction: column;
 
     .service-card__img {
-        width: 100%;
+        max-width: 100%;
     }
 
     .service-card__text-block {
         display: flex;
         flex-direction: column;
-        width: 400px;
         margin-top: 20px;
 
         .card__title {
             font-size: 25px;
             margin-bottom: 10px;
             text-transform: uppercase;
+
+            @media (max-width: @desktop) {
+                font-size: 22px;
+            }
         }
 
         .card__description {
-            font-size: 17px;
+            font-size: 18px;
+        }
+
+        @media (max-width: @desktop) {
+            width: 100%;
+            margin: 10px auto;
+            justify-content: center;
+            align-items: center;
         }
     }
 }

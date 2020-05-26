@@ -1,6 +1,16 @@
+@import "./constants.less";
+
 .gallery-card {
-    width: 30%;
-    margin-top: 20px;
+    width: 24.5%;
+    margin-top: 3px;
+
+    @media (min-width: @tablet) and (max-width: @desktop){
+        width: 33%;
+    }
+
+    @media (max-width: @tablet){
+        width: 99%;
+    }
 
     .gallery__picture {
         max-width: 100%;

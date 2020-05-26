@@ -10,7 +10,7 @@ export default function Footer() {
         <>
             <div className="separator" />
             <div className="footer-container">
-                <div className="footer-container__copyright">Copyright © 2002-2020 SwizMountain.com</div>
+                <div className="footer-container__copyright">Copyright © 2002-2020</div>
                 <div className="footer-container__contact">766 - 355 - 9358 / Gotthardstrasse Andermatt Switzerland / info@chediandermatt.com</div>
                 <div className="footer-container__social-icons">
                     <img src={facebookIcon} className="social-icon" alt="facebook" />

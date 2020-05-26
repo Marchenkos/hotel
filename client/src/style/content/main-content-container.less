@@ -1,53 +1,147 @@
+@import "../constants.less";
+
 .main-contant-container {
     .main-contant-container__item-block {
         width: 100%;
     }
-}
 
-.description-container {
-    position: absolute;
-    top: 50%;
-    z-index: 1;
-    left: 30%;
-    font-family: Didot;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    .description-container {
+        position: absolute;
+        top: 50%;
+        z-index: 1;
+        left: 30%;
+        font-family: Didot;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    
+        @media (max-width: @tablet) {
+            top: 28%;
+            left: 29%;
+        }
+    
+        @media (min-width: @tablet) and (max-width : @desktop) {
+            top: 50%;
+            left: 35%;
+        }
+    }
 
-.description-content-container {
+    .text-container {
     text-align: center;
-    width: 60%;
-    margin: 0 auto;
-}
+    width: 50%;
+    margin: 70px auto;
 
-.text-container {
-    padding-top: 70px;
-    margin: 0 auto;
-    width: 80%;
+    @media (max-width: @tablet) {
+        margin-top: 20px;
+        width: 80%;
+    }
+
+    @media (min-width: @tablet) and (max-width : @desktop) {
+        width: 70%;
+    }
 }
 
 .separation {
     height: 100px;
     width: 0.7px;
     margin: 50px auto;
-    background: #303030;
+    background: #4d4d4d;
+
+    @media (max-width: @tablet) {
+        margin: 30px auto;
+    }
 }
 
 .image-container {
-    background: #cbb2b2;
-    width: 60%;
-    margin: 0 auto 200px;
     position: relative;
-    height: 600px;
-    padding: 20px 0;
-}
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: 700px;
+    align-items: center;
+    margin: 0 auto;
 
-.additional-text-container {
-    width: 40%;
-    position: absolute;
-    right: 5%;
-    line-height: 1.4;
+    @media (max-width: @tablet) {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: space-evenly;
+        width: 100%;
+        height: auto;
+    }
+
+    @media (min-width: @desktop) {
+        height: 800px;
+    }
+
+    .image-container__background {
+        position: absolute;
+        background: #cbb2b2;
+        width: 80%;
+        margin: 0 auto;
+        height: 650px;
+        z-index: -1;
+
+        @media (max-width: @tablet) {
+           display: none;
+        }
+    }
+
+    .image-container__img-item {
+        max-width: 50%;
+        
+        @media (max-width: @tablet) {
+            max-width: 100%;
+        }
+
+        @media (min-width: @tablet) and (max-width : @desktop) {
+            max-width: 55%;
+        }
+    }
+
+    .image-container__description-text {
+        font-size: 18px;
+        color: #000000;
+        width: 35%;
+        padding-right: 40px;
+        padding-left: 10px;
+
+        box-sizing: border-box;
+        line-height: 1.4;
+
+        @media (max-width: @tablet) {
+            font-size: 15px;
+            width: 100%;
+            color: #b7afaf;
+            background: #241d1d;
+            padding: 50px 20px;
+        }
+
+        @media (min-width: @tablet) and (max-width : @desktop) {
+            width: 30%;
+            font-size: 15px;
+        }
+    }
+
+    .image-container__description-text--right {
+        padding-left: 40px;
+        padding-right: 10px;
+
+        @media (max-width: @tablet) {
+            order: 99;
+        }
+    }
+
+    .image-container__title-text {
+        width: 60%;
+        margin: 0px auto;
+        padding-top: 15px;
+        box-sizing: border-box;
+
+        @media (max-width: @tablet) {
+            margin-bottom: 25px;
+        }
+    }
 }
 
 .baner-container {
@@ -55,29 +149,43 @@
     width: 95%;
     position: relative;
 
+    @media (max-width: @tablet) {
+        margin: 10px auto;
+        width: 100%;
+    }
+
     .baner-description-container {
         position: absolute;
         top: 20%;
         left: 27%;
     }
+
+    
+    .service-cards-container__text-block-wrapper {
+        flex-basis: 100%;
+        margin: 0 5px 0;
+    }
 }
 
 .service-cards-container {
-    margin: 20px 100px;
+    margin: 50px 30px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 
+    @media (max-width: @tablet) {
+        margin: 30px;
+    }
+
     .service-cards-container__card-wrapper {
         flex-basis: 48%;
-    }
 
-    .service-cards-container__text-block-wrapper {
-        flex-basis: 100%;
-        margin-bottom: 40px;
-    }
-
-    .service-cards-container__card-wrapper--last {
-        margin-top: -70px;
+        @media (max-width: @tablet) {
+            flex-basis: 100%;
+            margin-bottom: 20px;
+        }
     }
 }
+    
+}
+

@@ -1,33 +1,11 @@
-import { CHANGE_MENU } from "../actions/changeMenuActions";
-import { CHANGE_USER } from "../actions/changeCurrentUser";
-import { SET_BOOK_ROOM } from "../actions/setBookedRoom";
+import { combineReducers } from "redux";
 
-export const defaultState = {
-    currentMenu: ["hotels", "rooms", "services", "reviews", "contacts", "gallery"],
-    currentUser: null,
-    jwt: null,
-    bookedRooms: [],
-};
+import roomsReducer from "./rooms.reducer";
+import userReducer from "./user.reducer";
+import menuReducer from "./menu.reducer";
 
-export default function rootReducer(state = defaultState, action) {
-    switch (action.type) {
-    case CHANGE_MENU:
-        return {
-            ...state,
-            currentMenu: action.menu
-        };
-    case CHANGE_USER:
-        return {
-            ...state,
-            currentUser: action.user,
-            jwt: action.jwt
-        };
-    case SET_BOOK_ROOM:
-        return {
-            ...state,
-            bookedRooms: action.rooms,
-        };
-    default:
-        return state;
-    }
-}
+export default combineReducers({
+    rooms: roomsReducer,
+    user: userReducer,
+    menu: menuReducer,
+});

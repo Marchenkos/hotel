@@ -15,6 +15,12 @@ export const ServiceSectionContainer = styled.div`
         flex-direction: row-reverse;
         font-family: Lato;
     `}
+
+    @media (max-width: 700px) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 `;
 
 export const TextUnderline = styled.div`
@@ -30,9 +36,9 @@ export const TextUnderline = styled.div`
 export const ServiceSectionImg = styled.img`
     max-width: 45%;
 
-    ${({ reverse }) => reverse && `
-        max-width: 26%;
-    `}
+    @media (max-width: 700px) {
+        max-width: 50%;
+    }
 `;
 
 export const ServiceSectionText = styled.div`
@@ -42,9 +48,10 @@ export const ServiceSectionText = styled.div`
     width: 45%;
     padding: 20px 0;
 
-    ${({ reverse }) => reverse && `
-        padding: 50px 0;
-    `}
+    @media (max-width: 700px) {
+        justify-content: center;
+        align-items: center;
+    }
 `;
 
 export default function ServiceSection(props) {
@@ -54,8 +61,8 @@ export default function ServiceSection(props) {
 
     return (
         <ServiceSectionContainer reverse={props.reverse}>
-            <ServiceSectionImg src={props.serviceImg} alt="service" reverse={props.reverse} />
-            <ServiceSectionText reverse={props.reverse} className="wow fadeIn" data-wow-delay="0.4s">
+            <ServiceSectionImg src={props.serviceImg} alt="service" />
+            <ServiceSectionText className="wow fadeIn" data-wow-delay="0.4s">
                 <div className="service-text__title">
                     {props.title}
                 </div>

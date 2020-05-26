@@ -6,8 +6,8 @@ import Header from "../components/Header";
 
 const mapStateToProps = state => {
     return {
-        currentMenu: state.currentMenu,
-        currentUser: state.currentUser
+        currentMenu: state.menu.currentMenu,
+        currentUser: state.user.currentUser
     };
 };
 

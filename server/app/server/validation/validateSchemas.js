@@ -8,12 +8,11 @@ const nameForUpdate = Joi.string().min(3).insensitive().allow(null);
 const descriptionForUpdate = Joi.string().insensitive().allow(null);
 const loginForUpdate = Joi.string().min(3).allow(null);
 
-const boardSchema = Joi.object().keys({
+const userSchema = Joi.object().keys({
     name,
     description,
-    color: Joi.string().default("white"),
-    createAt: login,
-    currentUser
+    usernName: login,
+    password
 });
 
 const boardSchemaForUpdate = Joi.object().keys({

@@ -1,11 +1,21 @@
+@import "../constants.less";
+
 .service-text__title {
     width: 80%;
     font-size: 22px;
     text-align: start;
     margin-bottom: 10px;
+
+    @media (max-width: @tablet){
+        text-align: center;
+    }
 }
 
 .service-text__description {
     width: 80%;
     font-size: 13px;
+
+    @media (max-width: @tablet){
+        width: 100%;
+    }
 }

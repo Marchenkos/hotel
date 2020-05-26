@@ -7,9 +7,12 @@ export const MainText = styled.div`
 
     ${({ inContent }) => inContent && `
         font-size: 35px;
-        margin-bottom: 30px;
         color: #000000;
     `}
+
+    @media (min-width: 700px) and (max-width : 1000px) {
+        font-size: 30px;
+    }
 
     @media (max-width: 700px) {
         font-size: 25px;
@@ -19,23 +22,43 @@ export const MainText = styled.div`
 export const AdditionalText = styled.div`
     font-size: 30px;
     color: #ffffff;
+    padding-top: 10px;
 
     ${({ inContent }) => inContent && `
         font-size: 20px;
         color: #000000;
+
+        @media (max-width: 700px) {
+            font-size: 18px;
+            padding-top: 15px;
+        }
     `}
+
+    @media (min-width: 1000px) {
+        font-size: 25px;
+    }
+
+    @media (min-width: 700px) and (max-width : 1000px) {
+        font-size: 20px;
+    }
+
+    @media (max-width: 700px) {
+        font-size: 18px;
+    }
 `;
 
 export const TitleText = styled.div`
     font-size: 80px;
     font-family: Didot;
-    width: 40%;
-    margin: 10px auto;
     color: #000000;
+    text-align: center;
 
     ${({ white }) => white && `
         color: #ffffff;
         font-size: 100px;
-        width: 100%;
     `}
+
+    @media (max-width: 700px) {
+        font-size: 40px;
+    }
 `;

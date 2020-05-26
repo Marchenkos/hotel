@@ -5,8 +5,8 @@ import BookingField from "../components/bookFields/BookingField";
 
 const mapStateToProps = state => {
     return {
-        currentUser: state.currentUser,
-        bookedRooms: state.bookedRooms
+        currentUser: state.user.currentUser,
+        bookedRooms: state.rooms.bookedRooms
     };
 };
 

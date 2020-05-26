@@ -4,7 +4,7 @@ import Room from "../components/Room";
 
 const mapStateToProps = state => {
     return {
-        currentUser: state.currentUser
+        currentUser: state.user.currentUser
     };
 };
 

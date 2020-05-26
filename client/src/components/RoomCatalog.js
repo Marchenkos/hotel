@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import * as $ from "jquery";
 
 import "../style/catalog-container.less";
 import catalogRoom from "../img/catalog3.jpg";
 import RoomCard from "./RoomCard";
+import Filter from "./Filter";
+
 import "../style/fonts/style.css";
 
-export default function RoomCatalog() {
+export default function RoomCatalog({ allRooms, getRoomsList }) {
     const [status, setStatus] = useState([]);
+    const [isShowFilter, setIsShowFilter] = useState(false);
     const [square, setSquare] = useState([]);
     const [description, setDescription] = useState([]);
     const [roomsId, setRoomsId] = useState([]);
@@ -15,24 +18,32 @@ export default function RoomCatalog() {
     useEffect(() => {
         const url = "http://hotel/api/getAllRooms.php";
 
-        $.ajax({
-            type: "POST",
-            url,
-            dataType: "json",
-            success: response => {
-                if (response.message) {
-                    for (const item of response.rooms) {
-                        setStatus(prevState => [...prevState, item.status_id]);
-                        setDescription(prevState => [...prevState, item.small_description]);
-                        setSquare(prevState => [...prevState, item.square]);
-                        setRoomsId(prevState => [...prevState, item.id]);
+        if (allRooms.length === 0) {
+            $.ajax({
+                type: "POST",
+                url,
+                dataType: "json",
+                success: response => {
+                    if (response.message) {
+                        getRoomsList(response.rooms);
+
+                        for (const item of response.rooms) {
+                            setStatus(prevState => [...prevState, item.status_id]);
+                            setDescription(prevState => [...prevState, item.small_description]);
+                            setSquare(prevState => [...prevState, item.square]);
+                            setRoomsId(prevState => [...prevState, item.id]);
+                        }
+                    } else {
+                        console.log("No correct data");
                     }
-                } else {
-                    console.log("No correct data");
                 }
-            }
-        });
+            });
+        }
     }, []);
+
+    const useFilter = useCallback(() => {
+        setIsShowFilter(!isShowFilter);
+    }, [isShowFilter]);
 
     const contentList = status.map(
         (item, index) => (
@@ -45,6 +56,11 @@ export default function RoomCatalog() {
             />
         )
     );
+
+    const applyFilter = useCallback(filterConditions => {
+        console.log(filterConditions);
+        setIsShowFilter(false);
+    }, []);
 
     return (
         <div className="catalog-container">
@@ -74,7 +90,8 @@ export default function RoomCatalog() {
                     {contentList}
                 </div>
             </div>
-            <div className="icon-filter filter-catalog" />
+            <div className="icon-filter filter-catalog" onClick={useFilter} />
+            {isShowFilter ? <Filter isShow={isShowFilter} applyFilter={applyFilter} /> : null}
         </div>
     );
 }

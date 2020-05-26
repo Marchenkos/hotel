@@ -36,7 +36,7 @@ const MenuContainer = styled.div`
 
         opacity: 0;
 
-        ${({ isShowMenu }) => !isShowMenu && `
+        ${({ isShowMenu }) => isShowMenu && `
             color: #b1a2a2;
             visibility: visible;
             opacity: 1;
@@ -58,21 +58,21 @@ export default function Header({ currentMenu, currentUser, onChangeUser }) {
         onChangeUser(name, jwtToken);
     }, []);
 
+    const resizeListener = () => {
+        if (window.innerWidth < constants.TABLET_WIDTH) {
+            setIsShowMenu(false);
+            setIsMobile(true);
+        }
+    };
+
     const handleScroll = () => {
-        if (window.innerHeight + window.pageYOffset < 800) {
+        if (window.innerHeight + window.pageYOffset < 700) {
             setIsScroll(false);
 
             return;
         }
 
         setIsScroll(true);
-    };
-
-    const resizeListener = () => {
-        if (window.innerWidth < constants.TABLET_WIDTH) {
-            setIsShowMenu(false);
-            setIsMobile(true);
-        }
     };
 
     useEffect(() => {

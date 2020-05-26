@@ -6,10 +6,12 @@ import WOW from "wowjs";
 
 import ScrollMagic from "scrollmagic";
 import main1 from "../img/services/bar5.jpg";
-import bar from "../img/services/bar.png";
+import bar from "../img/main/bar.png";
 import restaurant from "../img/services/restaurant.jpg";
+import penthouse from "../img/main/penthause.jpg";
+
 import spa from "../img/services/spa.jpg";
-import pool from "../img/services/poolVertical.jpg";
+import pool from "../img/services/public-service.jpg";
 
 import ServiceSection from "./services/ServiceSection";
 import "../style/services/service-container.less";
@@ -48,7 +50,7 @@ export default function Services() {
                 </div>
             </section>
             <section className="services__section services__section--highlited">
-                <ServiceSection title="Antoine Room-Sheraton Mountain Hotel" serviceImg={restaurant}>
+                <ServiceSection title="Antoine Room-Sheraton Mountain Hotel" serviceImg={penthouse}>
                     <p className="service-section__description-block">
                         Gifted Yoshihiro Seno’s career began as engineering designer before he decided to change paths and pursue the long road to mastering ‘washoku‘. Having worked in many Japanese restaurants in New York City, he subsequently moved back to Tokyo to continue his craft.
                     </p>
