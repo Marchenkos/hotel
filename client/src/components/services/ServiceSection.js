@@ -5,6 +5,10 @@ import styled from "styled-components";
 import "../../style/services/service-section.less";
 
 export const ServiceSectionContainer = styled.div`
+    display: -ms-flexbox;
+    -ms-flex-direction: row;
+    -ms-flexbox-wrap: wrap; 
+
     display: flex;
     flex-direction: row;
     padding: 20px;
@@ -42,6 +46,10 @@ export const ServiceSectionImg = styled.img`
 `;
 
 export const ServiceSectionText = styled.div`
+    display: -ms-flexbox;
+    -ms-flex-direction: row;
+    -ms-flexbox-wrap: wrap;
+
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

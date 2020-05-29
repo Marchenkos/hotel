@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import AuthBlock from "./authentication/AuthBlock";
+import AuthBlockButtonsContainer from "../containers/AuthBlockButtonsContainer";
 import Menu from "./Menu";
 import defaultLogo from "../img/logo/logo.png";
 import lightLogo from "../img/logo/light-logo2.png";
@@ -10,6 +10,10 @@ import { constants } from "../constants";
 import "../style/header-container.less";
 
 const MenuContainer = styled.div`
+    display: -ms-flexbox;
+    -ms-flex-direction: row;
+    -ms-flexbox-wrap: wrap; 
+
     display: flex;
     justify-content: flex-start;
     width: 100%;
@@ -45,7 +49,7 @@ const MenuContainer = styled.div`
 `;
 
 
-export default function Header({ currentMenu, currentUser, onChangeUser }) {
+export default function Header({ currentMenu, showAuthForm }) {
     const [isScroll, setIsScroll] = useState(false);
     const [isShowMenu, setIsShowMenu] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
@@ -53,10 +57,6 @@ export default function Header({ currentMenu, currentUser, onChangeUser }) {
     const showMenu = () => {
         setIsShowMenu(!isShowMenu);
     };
-
-    const changeUser = useCallback((name, jwtToken) => {
-        onChangeUser(name, jwtToken);
-    }, []);
 
     const resizeListener = () => {
         if (window.innerWidth < constants.TABLET_WIDTH) {
@@ -74,6 +74,12 @@ export default function Header({ currentMenu, currentUser, onChangeUser }) {
 
         setIsScroll(true);
     };
+
+    useEffect(() => {
+        if (showAuthForm) {
+            showMenu();
+        }
+    }, [showAuthForm]);
 
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
@@ -101,7 +107,7 @@ export default function Header({ currentMenu, currentUser, onChangeUser }) {
 
             <MenuContainer scroll={isScroll} isShowMenu={isShowMenu}>
                 <Menu content={currentMenu} />
-                <AuthBlock isScroll={isScroll} currentUser={currentUser} onChangeUser={changeUser} />
+                <AuthBlockButtonsContainer />
             </MenuContainer>
         </div>
     );

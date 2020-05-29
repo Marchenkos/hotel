@@ -13,9 +13,9 @@ export default function Footer() {
                 <div className="footer-container__copyright">Copyright © 2002-2020</div>
                 <div className="footer-container__contact">766 - 355 - 9358 / Gotthardstrasse Andermatt Switzerland / info@chediandermatt.com</div>
                 <div className="footer-container__social-icons">
-                    <img src={facebookIcon} className="social-icon" alt="facebook" />
-                    <img src={instagramIcon} className="social-icon" alt="instagramm" />
-                    <img src={twitterIcon} className="social-icon" alt="twitter" />
+                    <a href="https://www.facebook.com/"><img src={facebookIcon} className="social-icon" alt="facebook" /></a>
+                    <a href="https://www.instagram.com/?hl=en"><img src={instagramIcon} className="social-icon" alt="instagramm" /></a>
+                    <a href="https://twitter.com/explore"><img src={twitterIcon} className="social-icon" alt="twitter" /></a>
                 </div>
             </div>
         </>

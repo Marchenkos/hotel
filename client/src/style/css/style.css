@@ -1,5 +1,4 @@
 
-@media only screen and (min-width: 40em) {
   .modal-overlay {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -28,7 +27,7 @@
     opacity: 1;
     visibility: visible;
   }
-}
+
 
 .modal {
   display: -webkit-box;

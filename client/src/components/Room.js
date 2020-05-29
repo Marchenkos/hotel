@@ -3,40 +3,34 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useCallback } from "react";
 import cookie from "react-cookies";
+import WOW from "wowjs";
+import { Link, useLocation } from "react-router-dom";
+import { CatalogButton } from "../style/custom-components/Buttons";
 
-import { useLocation } from "react-router-dom";
-import * as $ from "jquery";
-import { Button } from "../style/custom-components/Buttons";
+
+// import Slider from "./SliderComponent";
 import Estimation from "./Estimation";
+import { MainText, AdditionalText, TitleText } from "../style/conponent-style/textBlocks";
 
 import main from "../img/2/main.jpg";
 import room2 from "../img/room2.jpg";
 import row from "../img/row.png";
 import rectangle from "../img/rectangle.png";
 import floorPlanImg from "../img/floorPlan.png";
-
+import { ROOMS_SERVISEC } from "../constants";
 import "../style/contant-container.less";
 import "../style/sliderBox.less";
 import "../style/room.less";
+import secondBg from "../img/header/headerbg.png";
 
-export default function Room({ currentUser }) {
-    const [status, setStatus] = useState(null);
-    const [description, setDescription] = useState(null);
-    const [windowView, setWindowView] = useState(null);
-    const [floor, setFloor] = useState(null);
-    const [cost, setCost] = useState(null);
-    const [floorPlan, setFloorPlan] = useState(null);
-    const [square, setSquare] = useState(null);
-    const [bed, setBed] = useState(null);
-    const [guests, setGuests] = useState(null);
-    const [wifi, setWifi] = useState(null);
-    const [hairDryer, setHairDryer] = useState(null);
-    const [tv, setTv] = useState(null);
-    const [conditioner, setConditioner] = useState(null);
-    const [babyBed, setBabyBed] = useState(null);
+export default function Room({ currentUser, allRooms }) {
+    const location = useLocation();
+    const [currentRoom, serCurrentRoom] = useState({});
     const [jwt, setJWT] = useState(null);
 
-    const location = useLocation();
+    useEffect(() => {
+        new WOW.WOW().init();
+    });
 
     useEffect(() => {
         const isLogin = cookie.load("jwtToken");
@@ -44,62 +38,48 @@ export default function Room({ currentUser }) {
         if (isLogin) {
             setJWT(cookie.load("jwtToken"));
         }
-
     }, [currentUser]);
 
     useEffect(() => {
         const roomId = location.id;
 
-        const url = "http://hotel/api/getRoom.php";
+        serCurrentRoom(allRooms[roomId - 1]);
+    }, [allRooms]);
 
-        const roomData = {
-            room_id: roomId
-        };
-
-        $.ajax({
-            type: "POST",
-            url,
-            dataType: "json",
-            data: JSON.stringify(roomData),
-            success: response => {
-                console.log(response);
-                if (response.message) {
-                    const props = response.room;
-                    setStatus(props.status_id);
-                    setDescription(props.description);
-                    setSquare(props.square);
-                    setWindowView(props.window_view);
-                    setFloor(props.floor);
-                    setCost(props.cost);
-                    setFloorPlan(props.floor_plan);
-                    setBed(props.bed);
-
-                    setTv(props.tv);
-                    setWifi(props.wifi);
-                    setConditioner(props.conditioner);
-                    setBabyBed(props.baby_bed);
-                    setHairDryer(props.hair_dryer);
-                    setGuests(props.guests);
-                } else {
-                    console.log("No correct data");
-                }
-            }
-        });
-    }, []);
+    const getServices = useCallback(() => {
+        const maxServices = ROOMS_SERVISEC.get(currentRoom.status_id;
+    }, [currentRoom]);
 
     return (
         <div className="contant-container">
-            <div className="contant-container__item contant-container__item--first">
-                <img src={`/${main}`} alt="bg" className="item__first-bg" />
-                <span className="item__title">{status}</span>
-                <div className="item__bg-title" />
+            <div className="main-room-block">
+                <div className="image-background-block">
+                    <img src={`/${main}`} alt="bg" className="image-background-block__main-bg" />
+                    <img src={secondBg} alt="bg" className="image-background-block__opacity-bg" />
+
+                </div>
+                <div className="wow fadeIn main-room-block__description" data-wow-delay="1s">
+                    <MainText>{`A SPACIOUS SUITE ${currentRoom.status_id} ROOM`}</MainText>
+                    <AdditionalText>feel like a celebrity</AdditionalText>
+                </div>
             </div>
             <div className="room">
                 <div className="room-main-container">
                     <div className="room-main-container__description">
-                        {description}
+                        <MainText inContent className="room-description__title">{currentRoom.status_id}</MainText>
+                        <p>{currentRoom.description}</p>
+                        <Link to={{
+                            pathname: `/room/book/${currentRoom.roomId}`,
+                            id: currentRoom.roomId
+                        }}
+                        >
+                            <CatalogButton bg>book now</CatalogButton>
+                        </Link>
                     </div>
                     <img src={`/${room2}`} alt="bg" className="room-main-container__picture" />
+                </div>
+                <div className="room-services">
+                    {getServices}
                 </div>
                 <div className="floor-plan">
                     <div className="floor-plan__title">
@@ -119,15 +99,6 @@ export default function Room({ currentUser }) {
                     </div>
                 </div>
 
-                <div className="sliderImg">
-                    <Button className="sliderImg__button-prev">
-                        Prev
-                    </Button>
-                    <img className="sliderImg__item" src={`/${main}`} alt="slider" />
-                    <Button className="sliderImg__button-next">
-                        Next
-                    </Button>
-                </div>
                 {
                     jwt ? (
                         <div className="estimate-contsiner">

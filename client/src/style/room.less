@@ -1,19 +1,38 @@
-.room-main-container {
+.main-room-block {
+  width: 100%;
+  position: relative;
+
+  .main-room-block__description {
+    top: 40%;
+    left: 20%;
     display: flex;
-    padding: 70px 0 20px 50px;
-    box-sizing: content-box;
+    flex-direction: column;
+    position: absolute;
+    align-items: center;
+    font-family: Didot;
   }
-  .room-main-container .room-main-container__description {
+}
+
+.room-main-container {
+  display: flex;
+  padding: 40px 20px;
+  justify-content: space-evenly;
+
+  .room-main-container__description {
     font-family: Century Gothic;
-    font-size: 20px;
+    font-size: 16px;
+    width: 38%;
     line-height: 1.4;
-    margin-right: 50px;
+
+    .room-description__title {
+      margin: 10px 0;
+    }
   }
-  .room-main-container .room-main-container__picture {
+
+  .room-main-container__picture {
     max-width: 50%;
-    position: relative;
-    top: -100px;
   }
+}
   .floor-plan {
     padding: 150px 0;
     position: relative;

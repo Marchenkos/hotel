@@ -9,6 +9,9 @@ import { constants } from "../constants";
 import "../style/css/style.css";
 
 const ButtonContainer = styled.div`
+    display: -ms-flexbox;
+    -ms-flex-direction: row;
+    -ms-flexbox-wrap: wrap; 
     display: flex;
     width: 80%;
 `;

@@ -1,29 +1,32 @@
 const express = require("express");
 
 const UserController = require("./controllers/userController");
+const RoomController = require("./controllers/roomController");
 const TokenController = require("./controllers/tokenController");
 
 class Router {
     constructor(app) {
         this.app = app;
         this.user = new UserController();
+        this.room = new RoomController();
         this.token = new TokenController();
         this.userRouter = express.Router();
+        this.roomRouter = express.Router();
     }
 
     connect() {
         this.userRequests();
+        this.roomRequests();
         this.app.use("/user", this.userRouter);
+        this.app.use("/room", this.roomRouter);
         this.tokenRequests();
     }
 
-    // boardRequests() {
-    //     this.boardRouter.get("/", this.board.getAll.bind(this.board));
-    //     this.boardRouter.get("/:name", this.board.getSpecifyBoard.bind(this.board));
-    //     this.boardRouter.post("/", this.board.addBoard.bind(this.board));
-    //     this.boardRouter.delete("/remove/:name", this.board.deleteBoardByName.bind(this.board));
-    //     this.boardRouter.put("/refresh/:name", this.board.updateBoard.bind(this.board));
-    // }
+    roomRequests() {
+        this.roomRouter.get("/", this.room.getAll.bind(this.room));
+        this.roomRouter.get("/:id", this.room.getSpecifyRoom.bind(this.room));
+        this.roomRouter.post("/", this.room.addRoom.bind(this.room));
+    }
 
     // cardRequests() {
     //     this.cardRouter.get("/", this.card.getAll.bind(this.card));

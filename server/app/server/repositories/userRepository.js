@@ -36,7 +36,6 @@ class UserRepository {
 
     async checkUser(login) {
         try {
-            console.log(login);
             return await User.findOne({ login });
         }
         catch(err) {

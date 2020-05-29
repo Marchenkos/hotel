@@ -29,9 +29,6 @@ class UserController{
 
     async checkUser(req, res, next) {
         const { login, password } = req.body;
-
-        console.log(password, login);
-
         const isCompare = await this.service.checkUser(login, password);
 
         isCompare ? res.send({message: "Success",

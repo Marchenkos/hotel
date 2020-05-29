@@ -21,4 +21,8 @@ export const Input = styled.input`
     ${({ black }) => black && `
         color: black;
     `}
+
+    ${({ error }) => error && `
+        border: 1px solid red;
+    `}
 `;

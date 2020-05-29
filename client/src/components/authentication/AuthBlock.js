@@ -1,48 +1,66 @@
-import React, { useEffect, useState, useCallback } from "react";
-import cookie from "react-cookies";
+import React, { useCallback, useState, useEffect } from "react";
+import styled from "styled-components";
 
-import UserForm from "../UserForm";
-import "../../style/auth-block.less";
+import { FormButton } from "../../style/custom-components/Buttons";
+import RegistrationForm from "../RegistrationForm";
+import AuthForm from "../AuthForm";
+import { constants } from "../../constants";
 
-export default function AuthBlock({ currentUser, onChangeUser }) {
-    const [isShowLoginForm, setIsShowLoginForm] = useState(false);
-    const [jwt, setJWT] = useState(null);
+import "../../style/css/style.css";
+
+const ButtonContainer = styled.div`
+    display: -ms-flexbox;
+    -ms-flex-direction: row;
+    -ms-flexbox-wrap: wrap; 
+    display: flex;
+    width: 80%;
+`;
+
+export default function AuthBlock({ onChangeUser, setShowAuthForm, showAuthForm }) {
+    const [choosedAuthForm, setChooseAuthdForm] = useState(true);
+    const [modalClass, setModalClass] = useState(constants.HIDE_MODAL);
+    const [modalOverlayClass, setModalOverlayClass] = useState(constants.HIDE_MODAL_OVERLAY);
 
     useEffect(() => {
-        const jwtToken = cookie.load("jwtToken");
-
-        if (jwtToken) {
-            setJWT(jwtToken);
+        if (showAuthForm) {
+            setModalClass(constants.ACTIVE_MODAL);
+            setModalOverlayClass(constants.ACTIVE_MODAL_OVERLAY);
+        } else {
+            setModalClass(constants.HIDE_MODAL);
+            setModalOverlayClass(constants.HIDE_MODAL_OVERLAY);
         }
-    }, [currentUser]);
+    }, [showAuthForm]);
 
-    const showLoginForm = useCallback(() => {
-        setIsShowLoginForm(!isShowLoginForm);
-    }, [isShowLoginForm]);
+    const chooseAuthForm = useCallback(() => {
+        setChooseAuthdForm(true);
+    }, [choosedAuthForm]);
 
-    const changeUser = useCallback((name, jwtToken) => {
-        onChangeUser(name, jwtToken);
+    const unchooseAuthForm = useCallback(() => {
+        setChooseAuthdForm(false);
+    }, [choosedAuthForm]);
+
+    const closeModal = useCallback(() => {
+        setShowAuthForm(false);
     }, []);
 
-    const isUserAuthenticated = () => {
-        return !!jwt;
-    };
-
-    const logOut = useCallback(() => {
-        cookie.remove("jwtToken");
-
-        changeUser(null, null);
-
-        setJWT(null);
-    }, [jwt]);
+    const changeUser = useCallback((user, jwt) => {
+        onChangeUser(user, jwt);
+    }, []);
 
     return (
-        <>
-            {
-                isUserAuthenticated() ? <button className="auth-button" onClick={logOut} header>Log out</button>
-                    : <button className="auth-button" onClick={showLoginForm}>Log in</button>
-            }
-            <UserForm closeModal={showLoginForm} changeUser={changeUser} active={isShowLoginForm} />
-        </>
+        <div className={modalOverlayClass}>
+            <div className={modalClass}>
+                <ButtonContainer>
+                    <FormButton onClick={chooseAuthForm} choosed={choosedAuthForm}>sign in</FormButton>
+                    <FormButton onClick={unchooseAuthForm} choosed={!choosedAuthForm}>sign up</FormButton>
+                    <FormButton onClick={closeModal} last>Close</FormButton>
+                </ButtonContainer>
+
+                {
+                    choosedAuthForm ? <AuthForm changeUser={changeUser} />
+                        : <RegistrationForm />
+                }
+            </div>
+        </div>
     );
 }

@@ -4,8 +4,12 @@ const schema = new Schema({
     status_id: {
         type: String
     },
-    estimation: {
-        type: Number
+    room_id: {
+        type: Number,
+        required: true,
+        index: {
+            unique: true
+        }
     },
     small_description: {
         type: String
@@ -19,15 +23,9 @@ const schema = new Schema({
     square: {
         type: Number
     },
-    bed: {
-        type: Number
-    },
     floor: {
         type: Number
     },
-    user_estimations: {
-        type: Array
-    }
 });
 
 module.exports = model("Room", schema);

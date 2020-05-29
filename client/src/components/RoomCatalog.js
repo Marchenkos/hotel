@@ -8,31 +8,38 @@ import Filter from "./Filter";
 
 import "../style/fonts/style.css";
 
-export default function RoomCatalog({ allRooms, getRoomsList }) {
-    const [status, setStatus] = useState([]);
+export default function RoomCatalog({ allRooms, getRoomsList, setFilterRoomsList, filterRooms }) {
     const [isShowFilter, setIsShowFilter] = useState(false);
-    const [square, setSquare] = useState([]);
-    const [description, setDescription] = useState([]);
-    const [roomsId, setRoomsId] = useState([]);
+    const [roomsCatalog, setRoomsCatalog] = useState([]);
+    const [isScroll, setIsScroll] = useState(false);
+
+    const handleScroll = () => {
+        if (window.innerHeight + window.pageYOffset < 1500) {
+            setIsScroll(false);
+
+            return;
+        }
+
+        setIsScroll(true);
+    };
 
     useEffect(() => {
-        const url = "http://hotel/api/getAllRooms.php";
+        window.addEventListener("scroll", handleScroll);
+
+        return () => window.removeEventListener("scroll", handleScroll);
+    });
+
+    useEffect(() => {
+        const url = "http://localhost:3000/room/";
 
         if (allRooms.length === 0) {
             $.ajax({
-                type: "POST",
+                type: "GET",
                 url,
                 dataType: "json",
                 success: response => {
-                    if (response.message) {
-                        getRoomsList(response.rooms);
-
-                        for (const item of response.rooms) {
-                            setStatus(prevState => [...prevState, item.status_id]);
-                            setDescription(prevState => [...prevState, item.small_description]);
-                            setSquare(prevState => [...prevState, item.square]);
-                            setRoomsId(prevState => [...prevState, item.id]);
-                        }
+                    if (response.length > 0) {
+                        setRoomsCatalog(response);
                     } else {
                         console.log("No correct data");
                     }
@@ -43,24 +50,101 @@ export default function RoomCatalog({ allRooms, getRoomsList }) {
 
     const useFilter = useCallback(() => {
         setIsShowFilter(!isShowFilter);
-    }, [isShowFilter]);
+    }, []);
 
-    const contentList = status.map(
-        (item, index) => (
-            <RoomCard
-                key={index}
-                roomId={roomsId[index]}
-                square={square[index]}
-                status={item}
-                description={description[index]}
-            />
-        )
-    );
-
-    const applyFilter = useCallback(filterConditions => {
-        console.log(filterConditions);
+    const hideFilter = useCallback(() => {
         setIsShowFilter(false);
     }, []);
+
+    useEffect(() => {
+        getRoomsList(roomsCatalog);
+    }, [roomsCatalog]);
+
+
+    const renderContentList = useCallback(() => {
+        if (filterRooms.length === 0) {
+            return filterRooms[0] === null ? null : (
+                allRooms.map(
+                    (item, index) => (
+                        <RoomCard
+                            key={index}
+                            roomId={item.room_id}
+                            status={item.status_id}
+                            description={item.small_description}
+                            cost={item.cost}
+                        />
+                    )
+                )
+            );
+        }
+
+        return filterRooms.map(
+            (item, index) => (
+                <RoomCard
+                    key={index}
+                    roomId={item.room_id}
+                    status={item.status_id}
+                    description={item.small_description}
+                    cost={item.cost}
+                />
+            )
+        );
+
+    }, [filterRooms, allRooms]);
+
+    const resetFilter = useCallback(() => {
+        setFilterRoomsList([]);
+    }, []);
+
+    const applyFilter = useCallback(filterConditions => {
+        resetFilter([]);
+        setIsShowFilter(false);
+
+        let filterCostRoomsList = [];
+        let filterStatusRoomsList = [];
+
+        if (filterConditions) {
+            if (filterConditions.minCost || filterConditions.maxCost) {
+                filterCostRoomsList = allRooms.filter(item => {
+                    if (!filterConditions.minCost && item.cost <= filterConditions.maxCost) {
+                        return item;
+                    }
+
+                    if (!filterConditions.maxCost && item.cost >= filterConditions.minCost) {
+                        return item;
+                    }
+
+                    if (item.cost >= filterConditions.minCost && item.cost <= filterConditions.maxCost) {
+                        return item;
+                    }
+                });
+            }
+
+            const firstFilterResult = filterCostRoomsList.length > 0 ? filterCostRoomsList : allRooms;
+
+            if (filterConditions.classic || filterConditions.comform || filterConditions.prestige) {
+                filterStatusRoomsList = firstFilterResult.filter(item => {
+                    if (filterConditions.classic && item.status_id === "classic") {
+                        return item;
+                    }
+
+                    if (filterConditions.comform && item.status_id === "comfort") {
+                        return item;
+                    }
+
+                    if (filterConditions.prestige && item.status_id === "prestige") {
+                        return item;
+                    }
+                });
+
+                filterStatusRoomsList = filterStatusRoomsList.length === 0 ? [null] : filterStatusRoomsList;
+            }
+
+            const result = filterStatusRoomsList.length > 0 ? filterStatusRoomsList : firstFilterResult;
+
+            setFilterRoomsList(result);
+        }
+    }, [allRooms]);
 
     return (
         <div className="catalog-container">
@@ -87,11 +171,11 @@ export default function RoomCatalog({ allRooms, getRoomsList }) {
                 </div>
 
                 <div className="rooms">
-                    {contentList}
+                    {renderContentList()}
                 </div>
             </div>
-            <div className="icon-filter filter-catalog" onClick={useFilter} />
-            {isShowFilter ? <Filter isShow={isShowFilter} applyFilter={applyFilter} /> : null}
+            {isScroll ? <div className="icon-filter filter-catalog" onClick={useFilter} /> : null}
+            {isShowFilter ? <Filter isShow={isShowFilter} hideFilter={hideFilter} resetFilter={resetFilter} applyFilter={applyFilter} /> : null}
         </div>
     );
 }

@@ -18,7 +18,7 @@ export default function AuthForm({ changeUser }) {
     const [isErrorMessage, setIsErrorMessage] = useState(null);
     const authFormRef = useRef(null);
 
-    const onsubmitForm = useCallback(e => {
+    const onsubmitForm = useCallback((e) => {
         e.preventDefault();
 
         if (!loginRef.current.value && !passwordRef.current.value && !duplicatePassword.current.value) {
@@ -35,10 +35,24 @@ export default function AuthForm({ changeUser }) {
 
         const url = "http://localhost:3000/user/login";
 
+        // fetch("http://localhost:3000/user/login", {
+        //     method: "POST",
+        //     headers: {
+        //         "Access-Control-Allow-Origin": "*"
+        //     },
+        //     body: {
+        //         login: loginRef.current.value,
+        //         password: passwordRef.current.value,
+        //     },
+        // })
+        //     .then(res => res.json())
+        //     .then(response => {
+        //         console.log(response);
+        //     });
+
         $.ajax({
             type: "POST",
             url,
-            dataType: "json",
             data: {
                 login: loginRef.current.value,
                 password: passwordRef.current.value

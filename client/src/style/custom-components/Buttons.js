@@ -66,6 +66,11 @@ export const FormButton = styled.button`
         flex-basis: 50%;
     `}
 
+    ${({ black }) => black && `
+        color: black;
+        font-weight: 700;
+    `}
+
     ${({ choosed }) => choosed && `
         border-bottom: px solid blue;
         bottom: 20px;

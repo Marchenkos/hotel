@@ -21,7 +21,7 @@ export default function Main() {
                 <Route path="/hotels" component={Content} />
                 <Route path="/contacts" component={Contacts} />
                 <Route exact path="/rooms" component={RoomsCatalogContainer} />
-                <Route exact path="/room/:id" component={RoomContainer} />
+                <Route exact path="/cart-room" component={RoomContainer} />
                 <Route path="/room/book/:id" component={BookingField} />
                 <Route exact path="/gallery" component={GalleryScreen} />
                 <Route path="/reviews" component={CommentList} />

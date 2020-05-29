@@ -33,4 +33,29 @@ export const constants = {
         tablet: "(max-width: 1000px)",
         desktop: "(min-width: 1000px)",
     },
+    FILTER: {
+        increaseMin: "increase-min",
+        increaseMax: "increase-max",
+        decreaseMax: "decrease-max",
+        decreaseMin: "decrease-min",
+    }
 };
+
+export const ROOMS_COLLECTION = new Map([
+    [1, "../img/roomsCatalog/1.jpg"],
+    [2, "../img/roomsCatalog/2.jpg"],
+    [3, "../img/roomsCatalog/3.jpg"],
+    [4, "../img/roomsCatalog/4.jpg"],
+    [5, "../img/roomsCatalog/5.jpg"],
+    [6, "../img/roomsCatalog/6.jpg"],
+    [7, "../img/roomsCatalog/7.jpg"],
+    [8, "../img/roomsCatalog/8.jpg"],
+    [9, "../img/roomsCatalog/9.jpg"],
+    [10, "../img/roomsCatalog/10.jpg"],
+]);
+
+export const ROOMS_SERVISEC = new Map([
+    ["classic", 3],
+    ["comfort", 5],
+    ["prestige", 7],
+]);

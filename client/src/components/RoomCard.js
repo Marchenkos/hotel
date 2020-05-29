@@ -1,35 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import "../style/room-card.less";
-import room1 from "../img/rooms/1.jpg";
-import room4 from "../img/rooms/2cl.jpg";
-import room3 from "../img/rooms/3cl.jpg";
-import room2 from "../img/rooms/4cl.jpg";
-import room5 from "../img/rooms/5com.jpg";
-import room6 from "../img/rooms/7com2.jpg";
+import { CatalogButton } from "../style/custom-components/Buttons";
 
-export const CatalogButton = styled.button`
-    font-family: Century Gothic;
-    text-transform: uppercase;
-    height: 60px;
-    margin-top: 20px;
-    box-sizing: content-box;
-    background: none;
-    border: 2px solid red;
-    font-size: 17px;
-    color: red;
-
-    ${({ bg }) => bg && `
-        background: red;
-        color: white;
-    `}
-`;
-
-export default function RoomCard({ status, description, square, roomId }) {
-    const roomsImg = [room1, room2, room3, room4, room5, room6];
-
+export default function RoomCard({ status, description, cost, roomId }) {
     return (
         <>
             <hr className="room__separation" />
@@ -39,7 +14,7 @@ export default function RoomCard({ status, description, square, roomId }) {
                     {status[0].toUpperCase() + status.slice(1)}
                 </div>
                 <div className="room-card__img">
-                    <img src={roomsImg[roomId - 1]} alt="room-picture" className="img-room" />
+                    <img src={`public/img/roomsCatalog/${roomId}.jpg`} alt="room" className="img-room" />
                 </div>
 
                 <div className="room-card__text-block">
@@ -47,7 +22,7 @@ export default function RoomCard({ status, description, square, roomId }) {
                         {status[0].toUpperCase() + status.slice(1)}
                     </div>
                     <div className="text-block__signature">
-                        {square}
+                        {`$${cost} / day`}
                     </div>
                     <div className="text-block__description">
                         {description}
@@ -56,7 +31,7 @@ export default function RoomCard({ status, description, square, roomId }) {
 
                 <div className="room-card__button-block">
                     <Link to={{
-                        pathname: `/room/${roomId}`,
+                        pathname: "/cart-room",
                         id: roomId }}
                     >
                         <CatalogButton>view room</CatalogButton>
