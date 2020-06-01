@@ -46,7 +46,7 @@ export default function RoomCatalog({ allRooms, getRoomsList, setFilterRoomsList
                 }
             });
         }
-    }, []);
+    });
 
     const useFilter = useCallback(() => {
         setIsShowFilter(!isShowFilter);
@@ -62,20 +62,24 @@ export default function RoomCatalog({ allRooms, getRoomsList, setFilterRoomsList
 
 
     const renderContentList = useCallback(() => {
-        if (filterRooms.length === 0) {
-            return filterRooms[0] === null ? null : (
-                allRooms.map(
-                    (item, index) => (
-                        <RoomCard
-                            key={index}
-                            roomId={item.room_id}
-                            status={item.status_id}
-                            description={item.small_description}
-                            cost={item.cost}
-                        />
-                    )
-                )
-            );
+        // if (!filterRooms) {
+        //     return (
+        //         <div>
+        //             Ooops, we don't have rooms, like this..
+        //         </div>
+        //     );
+        // }
+
+        if (!filterRooms || filterRooms.length === 0) {
+            return allRooms.map((item, index) => (
+                <RoomCard
+                    key={index}
+                    roomId={item.room_id}
+                    status={item.status_id}
+                    description={item.small_description}
+                    cost={item.cost}
+                />
+            ));
         }
 
         return filterRooms.map(
@@ -137,10 +141,10 @@ export default function RoomCatalog({ allRooms, getRoomsList, setFilterRoomsList
                     }
                 });
 
-                filterStatusRoomsList = filterStatusRoomsList.length === 0 ? [null] : filterStatusRoomsList;
+                filterStatusRoomsList = filterStatusRoomsList.length === 0 ? null : filterStatusRoomsList;
             }
 
-            const result = filterStatusRoomsList.length > 0 ? filterStatusRoomsList : firstFilterResult;
+            const result = filterStatusRoomsList.length > 0 ? filterStatusRoomsList : null;
 
             setFilterRoomsList(result);
         }

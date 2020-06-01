@@ -1,10 +1,12 @@
+import cookie from "react-cookies";
+
 import { CHANGE_USER } from "../actions/changeCurrentUser";
 import { SHOW_AUTH_FORM } from "../actions/showAuthForm.action";
 
 export const defaultState = {
-    currentUser: null,
+    currentUser: cookie.load("currentUser") ? cookie.load("currentUser") : null,
     showAuthForm: false,
-    jwt: null,
+    jwt: cookie.load("jwtToken") ? cookie.load("jwtToken").token : null,
 };
 
 export default function userReducer(state = defaultState, action) {

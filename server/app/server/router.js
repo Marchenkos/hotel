@@ -3,6 +3,7 @@ const express = require("express");
 const UserController = require("./controllers/userController");
 const RoomController = require("./controllers/roomController");
 const TokenController = require("./controllers/tokenController");
+const CommentController = require("./controllers/commentController");
 
 class Router {
     constructor(app) {
@@ -10,15 +11,20 @@ class Router {
         this.user = new UserController();
         this.room = new RoomController();
         this.token = new TokenController();
+        this.comment = new CommentController();
+
         this.userRouter = express.Router();
         this.roomRouter = express.Router();
+        this.commentRouter = express.Router();
     }
 
     connect() {
         this.userRequests();
+        this.commentRequests();
         this.roomRequests();
         this.app.use("/user", this.userRouter);
         this.app.use("/room", this.roomRouter);
+        this.app.use("/comment", this.commentRouter);
         this.tokenRequests();
     }
 
@@ -26,6 +32,15 @@ class Router {
         this.roomRouter.get("/", this.room.getAll.bind(this.room));
         this.roomRouter.get("/:id", this.room.getSpecifyRoom.bind(this.room));
         this.roomRouter.post("/", this.room.addRoom.bind(this.room));
+        this.roomRouter.post("/get-estimation", this.room.getEstimation.bind(this.room));
+        this.roomRouter.post("/add-estimation", this.room.addEstimations.bind(this.room));
+        this.roomRouter.post("/book-room", this.room.bookRoom.bind(this.room));
+        this.roomRouter.post("/booked-date", this.room.getBookedRooms.bind(this.room));
+    }
+
+    commentRequests() {
+        this.commentRouter.post("/all-comments", this.comment.getComments.bind(this.comment));
+        this.commentRouter.post("/save-comment", this.comment.saveComments.bind(this.comment));
     }
 
     // cardRequests() {
@@ -39,7 +54,7 @@ class Router {
 
     userRequests() {
         this.userRouter.get("/", this.user.getAll.bind(this.user));
-        this.userRouter.get("/:name", this.user.findUser.bind(this.user));
+        this.userRouter.post("/get-user", this.user.findUser.bind(this.user));
         this.userRouter.post("/registration", this.user.addUser.bind(this.user));
         this.userRouter.post("/login", this.user.checkUser.bind(this.user));
     }

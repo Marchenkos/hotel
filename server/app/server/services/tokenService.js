@@ -13,6 +13,20 @@ class TokenService {
             token: jwt.sign({id: username}, serverConfig.secretKey),
         };
     }
+
+    async varifyToken(token) {
+        return jwt.verify(token, serverConfig.secretKey, function(err, decoded) {
+            if (err) {
+                return false;
+            }
+
+            return true;
+        });
+    }
+
+    async decodeToken(token) {
+        return jwt.decode(token, {complete: true});
+    }
 }
 
 module.exports = TokenService;

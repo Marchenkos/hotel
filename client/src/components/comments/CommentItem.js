@@ -2,13 +2,9 @@ import React from "react";
 import { Button } from "../../style/custom-components/Buttons";
 
 import "../../style/contant-container.less";
-import "../../style/comments.less";
+import "../../style/comments/comment-item.less";
 
-export default function CommentItem({ comment, answer }) {
-    const onAnswer = () => {
-        answer(comment.id);
-    };
-
+export default function CommentItem({ comment }) {
     return (
         <div className="comment-item">
             <div className="item-header">
@@ -20,10 +16,7 @@ export default function CommentItem({ comment, answer }) {
                 </div>
             </div>
             <div className="item-content">
-                {comment.description}
-            </div>
-            <div className="item-footer">
-                <Button onClick={onAnswer} comment>Answer</Button>
+                {comment.message}
             </div>
         </div>
     );

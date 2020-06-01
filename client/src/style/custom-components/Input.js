@@ -22,7 +22,16 @@ export const Input = styled.input`
         color: black;
     `}
 
+    ${({ boldBorder }) => boldBorder && `
+        border: 1px solid black;
+        color: black;
+    `}
+
     ${({ error }) => error && `
+        border: 1px solid red;
+    `}
+
+    ${({ invalid }) => invalid && `
         border: 1px solid red;
     `}
 `;

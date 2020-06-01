@@ -39,19 +39,13 @@
     display: flex;
     flex-wrap: wrap;
   }
-  .floor-plan .floor-plan__title {
-    flex-basis: 100%;
-    text-align: center;
-    font-size: 50px;
-    font-family: Century Gothic;
-    text-transform: uppercase;
-    margin-bottom: 70px;
-  }
-  .floor-plan .floor-plan__picture {
+
+  .floor-plan__picture {
     max-width: 55%;
     flex-basis: 45%;
   }
-  .floor-plan .floor-plan__description {
+
+  .floor-plan__description {
     font-family: Century Gothic;
     padding: 80px 50px;
     text-transform: uppercase;
@@ -61,7 +55,8 @@
     line-height: 1.4;
     box-sizing: border-box;
   }
-  .floor-plan .floor-plan__rectangle {
+
+  .floor-plan__rectangle {
     position: absolute;
     top: 30%;
     right: 10%;
@@ -80,3 +75,30 @@
       margin-right: 10px;
     }
   }
+
+  .slider-block {
+    width: 80%;
+    margin: 50px auto;
+  }
+
+  .room-services {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    margin: 100px auto 50px;
+    justify-content: space-evenly;
+
+    .service-icon {
+      max-width: 20%;
+      margin: 20px;
+    }
+  }
+
+.room-article-title {
+  flex-basis: 100%;
+  text-align: center;
+  font-size: 50px;
+  font-family: Century Gothic;
+  text-transform: uppercase;
+  margin-bottom: 70px;
+}

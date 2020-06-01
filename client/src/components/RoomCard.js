@@ -37,7 +37,7 @@ export default function RoomCard({ status, description, cost, roomId }) {
                         <CatalogButton>view room</CatalogButton>
                     </Link>
                     <Link to={{
-                        pathname: `/room/book/${roomId}`,
+                        pathname: "/room/book",
                         id: roomId }}
                     >
                         <CatalogButton bg>book a room</CatalogButton>

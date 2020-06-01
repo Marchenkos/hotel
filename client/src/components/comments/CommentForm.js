@@ -1,6 +1,7 @@
 import React, { useRef, useCallback } from "react";
 import * as moment from "moment";
 import cookie from "react-cookies";
+import * as $ from "jquery";
 
 import { Input } from "../../style/custom-components/Input";
 import { Button } from "../../style/custom-components/Buttons";
@@ -15,11 +16,26 @@ export default function CommentForm({ onSend }) {
         const comment = {
             jwt: cookie.load("jwtToken"),
             date: today.format("YYYY-MM-DD").toString(),
-            description: contentRef.current.value,
-            to_user: ""
+            comment: contentRef.current.value,
         };
 
-        onSend(comment);
+        const url = "http://localhost:3000/comment/save-comment";
+
+        $.ajax({
+            type: "POST",
+            url,
+            dataType: "json",
+            data: {
+                jwt: cookie.load("jwtToken").token,
+                date: today.format("YYYY-MM-DD").toString(),
+                message: contentRef.current.value,
+            },
+            success: response => {
+                console.log(response.message);
+            }
+        });
+
+        onSend();
     });
 
     return (

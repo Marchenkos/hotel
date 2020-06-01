@@ -13,8 +13,8 @@ class UserService {
         return await this.repository.getAll();
     }
 
-    async findUser(condition) {
-        return await this.repository.findOne(condition);
+    async findUser(login) {
+        return await this.repository.findOne(login);
     }
 
     async addUser(user) {

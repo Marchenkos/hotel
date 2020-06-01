@@ -1,19 +1,38 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import * as $ from "jquery";
 
 import "../style/booking-container.less";
 import "../style/calendar.less";
 
 import CalendarSlide from "./CalendarSlide";
-import { Button } from "../style/custom-components/Buttons";
+import leftArrow from "../img/calendar/arrowRedLeft.png";
+import rightArrow from "../img/calendar/arrowRed.png";
 
-export default function Calendar({ onBookRooms }) {
-    const [month, setMonth] = useState(3);
-    const bookedDays = [
-        "2020-03-10",
-        "2020-04-03",
-        "2020-03-20",
-        "2020-03-21"
-    ];
+export default function Calendar({ onBookRooms, currentRoom }) {
+    const [bookedDates, setBookedDates] = useState([]);
+
+    useEffect(() => {
+        const url = "http://localhost:3000/room/booked-date";
+
+        $.ajax({
+            type: "POST",
+            url,
+            dataType: "json",
+            data: {
+                roomId: currentRoom,
+            },
+            success: response => {
+                if (response) {
+                    response.map(item => {
+                        setBookedDates(prev => [...prev, item.ckeck_in, item.ckeck_out]);
+                    });
+                }
+            }
+        });
+    });
+
+    const [month, setMonth] = useState(5);
+
 
     const prevMonth = useCallback(() => {
         if (month > 1) {
@@ -29,9 +48,11 @@ export default function Calendar({ onBookRooms }) {
 
     return (
         <div className="calendar-container">
-            <Button onClick={prevMonth} calendar>prev</Button>
-            <CalendarSlide bookedDays={bookedDays} onBookRooms={onBookRooms} month={month} />
-            <Button onClick={nextMonth} calendar>next</Button>
+            <div className="calendar-container__buttons-block">
+                <img src={`/${leftArrow}`} className="button-block__arrow" alt="arrow" onClick={prevMonth} />
+                <img src={`/${rightArrow}`} alt="arrow" className="button-block__arrow" onClick={nextMonth} />
+            </div>
+            <CalendarSlide bookedDays={bookedDates} onBookRooms={onBookRooms} month={month} />
         </div>
     );
 }

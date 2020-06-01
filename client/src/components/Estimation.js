@@ -6,54 +6,43 @@ import * as $ from "jquery";
 
 import emptyStar from "../img/stars/emptyStar.png";
 import fillStar from "../img/stars/fillStar.png";
-
+import { constants } from "../constants";
 import "../style/stars.less";
 
-export default function Estimation({ jwt, estimation, roomId }) {
+export default function Estimation({ currentUser, roomId }) {
     const [estimationCount, setEstimationCount] = useState(0);
     const [message, setMessage] = useState(null);
 
-    const maxCount = 5;
-
     useEffect(() => {
-        const estimationData = {
-            jwt,
-            room_id: roomId
-        };
-
-        $.ajax({
-            type: "POST",
-            url: "http://hotel/api/checkEstimation.php",
-            dataType: "json",
-            data: JSON.stringify(estimationData),
-            success: response => {
-                if (response) {
-                    setEstimationCount(response);
-                }
-
-                console.log(response);
-            }
-        });
-    }, []);
-
-    const setEstimateCallBack = useCallback(count => {
-        const url = "http://hotel/api/estimate_room.php";
-
-        const estimationData = {
-            jwt,
-            room_id: roomId,
-            estimation: count
-        };
-
-        console.log(roomId);
+        const url = "http://localhost:3000/room/get-estimation";
 
         $.ajax({
             type: "POST",
             url,
             dataType: "json",
-            data: JSON.stringify(estimationData),
+            data: {
+                login: currentUser,
+                roomId
+            },
             success: response => {
-                console.log("PID");
+                if (response) {
+                    setEstimationCount(response);
+                }
+            }
+        });
+    }, []);
+
+    const setEstimateCallBack = useCallback(count => {
+        const url = "http://localhost:3000/room/add-estimation";
+
+        $.ajax({
+            type: "POST",
+            url,
+            dataType: "json",
+            data: {
+                login: currentUser,
+                roomId,
+                estimation: count
             }
         });
 
@@ -76,7 +65,7 @@ export default function Estimation({ jwt, estimation, roomId }) {
         const emptyStarArray = [];
 
         if (estimationCount > 0) {
-            for (let i = 1; i <= maxCount - estimationCount; i++) {
+            for (let i = 1; i <= constants.MAX_ESTIMATIOM - estimationCount; i++) {
                 emptyStarArray.push(<img
                     src={`/${emptyStar}`}
                     key={i}
@@ -84,7 +73,7 @@ export default function Estimation({ jwt, estimation, roomId }) {
                 />);
             }
         } else {
-            for (let i = 1; i <= maxCount - estimationCount; i++) {
+            for (let i = 1; i <= constants.MAX_ESTIMATIOM - estimationCount; i++) {
                 emptyStarArray.push(<img
                     src={`/${emptyStar}`}
                     key={i}

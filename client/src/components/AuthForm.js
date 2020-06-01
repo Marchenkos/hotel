@@ -35,21 +35,6 @@ export default function AuthForm({ changeUser }) {
 
         const url = "http://localhost:3000/user/login";
 
-        // fetch("http://localhost:3000/user/login", {
-        //     method: "POST",
-        //     headers: {
-        //         "Access-Control-Allow-Origin": "*"
-        //     },
-        //     body: {
-        //         login: loginRef.current.value,
-        //         password: passwordRef.current.value,
-        //     },
-        // })
-        //     .then(res => res.json())
-        //     .then(response => {
-        //         console.log(response);
-        //     });
-
         $.ajax({
             type: "POST",
             url,
@@ -66,10 +51,17 @@ export default function AuthForm({ changeUser }) {
                     const expires = new Date();
                     expires.setDate(Date.now() + 1000 * 60 * 60 * 24 * 14);
                     cookie.remove("jwtToken");
+                    cookie.remove("currentUser");
 
                     cookie.save(
                         "jwtToken",
                         response.jwt,
+                        { expires }
+                    );
+
+                    cookie.save(
+                        "currentUser",
+                        loginRef.current.value,
                         { expires }
                     );
 

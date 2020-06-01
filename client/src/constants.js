@@ -38,7 +38,9 @@ export const constants = {
         increaseMax: "increase-max",
         decreaseMax: "decrease-max",
         decreaseMin: "decrease-min",
-    }
+    },
+    REDIRECT_PAUSE: 3000,
+    MAX_ESTIMATIOM: 5,
 };
 
 export const ROOMS_COLLECTION = new Map([
@@ -55,7 +57,28 @@ export const ROOMS_COLLECTION = new Map([
 ]);
 
 export const ROOMS_SERVISEC = new Map([
-    ["classic", 3],
-    ["comfort", 5],
-    ["prestige", 7],
+    ["classic", [
+        "public/img/service-icons/bags.jpg",
+        "public/img/service-icons/dining.jpg",
+        "public/img/service-icons/internet.jpg",
+        "public/img/service-icons/smoke.jpg",
+    ]],
+    ["comfort", [
+        "public/img/service-icons/bags.jpg",
+        "public/img/service-icons/internet.jpg",
+        "public/img/service-icons/smoke.jpg",
+        "public/img/service-icons/dining.jpg",
+        "public/img/service-icons/parking.jpg",
+        "public/img/service-icons/fitness.jpg",
+    ]],
+    ["prestige", [
+        "public/img/service-icons/bags.jpg",
+        "public/img/service-icons/internet.jpg",
+        "public/img/service-icons/smoke.jpg",
+        "public/img/service-icons/dining.jpg",
+        "public/img/service-icons/parking.jpg",
+        "public/img/service-icons/fitness.jpg",
+        "public/img/service-icons/pools.jpg",
+        "public/img/service-icons/internet.jpg",
+    ]],
 ]);

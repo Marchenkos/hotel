@@ -12,9 +12,11 @@ class UserController{
     }
 
     async findUser(req, res, next) {
-        const userName = req.params.name;
+        const {
+            login
+        } = req.body;
 
-        const user = await this.service.findUser({ login: userName });
+        const user = await this.service.findUser(login);
 
         user ? res.send(user) : next(new Error("Not found"));
     }

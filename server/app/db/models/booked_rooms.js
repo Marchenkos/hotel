@@ -4,14 +4,14 @@ const schema = new Schema({
     room_id: {
         type: Number
     },
-    user_id: {
-        type: Number
+    email: {
+        type: String
     },
     ckeck_in: {
-        type: Date
+        type: String
     },
     ckeck_out: {
-        type: Date
+        type: String
     },
     cost: {
         type: Number

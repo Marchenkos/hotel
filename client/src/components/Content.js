@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import React, { useEffect } from "react";
 import WOW from "wowjs";
+
 import ServiceCard from "./ServiceCard";
 
 import cityPicture from "../img/main/city1.jpg";

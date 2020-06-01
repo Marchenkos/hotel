@@ -98,8 +98,8 @@ export default function Header({ currentMenu, showAuthForm }) {
             <div className="header-container__logo">
                 <Link to="/">
                     {
-                        isScroll || isMobile ? <img src={lightLogo} className="logo" alt="hotel_logo" />
-                            : <img src={defaultLogo} className="logo" alt="hotel_logo" />
+                        isScroll || isMobile ? <img src={`/${lightLogo}`} className="logo" alt="hotel_logo" />
+                            : <img src={`/${defaultLogo}`} className="logo" alt="hotel_logo" />
                     }
                 </Link>
             </div>

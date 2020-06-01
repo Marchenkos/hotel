@@ -7,17 +7,11 @@ class UserRepository {
         return userList.length > 0 ? userList : null;
     }
 
-    async findOne(condition) {
-        const result = await User.findOne(condition, (err, user) => {
-            if (err) {
-                return null;
-            }
+    async findOne(currentLogin) {
+        const user = await User.find({ login: currentLogin });
 
-            return user;
-        });
-
-        return result;
-    }
+        return user;
+    };
 
     async addUser(newUser) {
         try {

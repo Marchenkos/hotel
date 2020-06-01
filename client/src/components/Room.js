@@ -2,13 +2,10 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useCallback } from "react";
-import cookie from "react-cookies";
 import WOW from "wowjs";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CatalogButton } from "../style/custom-components/Buttons";
-
-
-// import Slider from "./SliderComponent";
+import Slider from "./Slider";
 import Estimation from "./Estimation";
 import { MainText, AdditionalText, TitleText } from "../style/conponent-style/textBlocks";
 
@@ -23,31 +20,25 @@ import "../style/sliderBox.less";
 import "../style/room.less";
 import secondBg from "../img/header/headerbg.png";
 
-export default function Room({ currentUser, allRooms }) {
-    const location = useLocation();
+export default function Room({ location, currentUser, jwt, allRooms }) {
     const [currentRoom, serCurrentRoom] = useState({});
-    const [jwt, setJWT] = useState(null);
 
     useEffect(() => {
         new WOW.WOW().init();
     });
 
     useEffect(() => {
-        const isLogin = cookie.load("jwtToken");
-
-        if (isLogin) {
-            setJWT(cookie.load("jwtToken"));
-        }
-    }, [currentUser]);
-
-    useEffect(() => {
         const roomId = location.id;
 
         serCurrentRoom(allRooms[roomId - 1]);
-    }, [allRooms]);
+    });
 
     const getServices = useCallback(() => {
-        const maxServices = ROOMS_SERVISEC.get(currentRoom.status_id;
+        if (Object.entries(currentRoom).length) {
+            const allServices = ROOMS_SERVISEC.get(currentRoom.status_id);
+
+            return allServices.map((item, index) => (<img key={index} src={item} alt="service-icon" className="service-icon" />));
+        }
     }, [currentRoom]);
 
     return (
@@ -69,8 +60,8 @@ export default function Room({ currentUser, allRooms }) {
                         <MainText inContent className="room-description__title">{currentRoom.status_id}</MainText>
                         <p>{currentRoom.description}</p>
                         <Link to={{
-                            pathname: `/room/book/${currentRoom.roomId}`,
-                            id: currentRoom.roomId
+                            pathname: "/room/book",
+                            id: currentRoom.room_id
                         }}
                         >
                             <CatalogButton bg>book now</CatalogButton>
@@ -79,10 +70,14 @@ export default function Room({ currentUser, allRooms }) {
                     <img src={`/${room2}`} alt="bg" className="room-main-container__picture" />
                 </div>
                 <div className="room-services">
-                    {getServices}
+                    <div className="room-article-title">Resort Amenities</div>
+                    {getServices()}
+                </div>
+                <div className="slider-block">
+                    <Slider roomId={currentRoom.room_id} />
                 </div>
                 <div className="floor-plan">
-                    <div className="floor-plan__title">
+                    <div className="room-article-title">
                         floor plan
                     </div>
 
@@ -103,7 +98,7 @@ export default function Room({ currentUser, allRooms }) {
                     jwt ? (
                         <div className="estimate-contsiner">
                             <span className="estimate-title">Estimate this room</span>
-                            <Estimation roomId={location.id} estimation={0} jwt={jwt} />
+                            <Estimation roomId={location.id} currentUser={currentUser} />
                         </div>
                     )
                         : null

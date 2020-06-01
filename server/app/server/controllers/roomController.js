@@ -19,6 +19,65 @@ class RoomController{
         room === null ? next(new Error("Not found")) : res.send(room);
     }
 
+    
+    async getBookedRooms(req, res, next) {
+        const {
+            roomId
+        } = req.body;
+
+        const result = await this.service.findBookedRoom(roomId);
+
+        res.send(result);
+    }
+
+    async bookRoom(req, res, next) {
+        const {
+            room_id,
+            email,
+            ckeck_in,
+            ckeck_out,
+            cost,
+        } = req.body;
+
+        console.log(req.body);
+
+        const room = await this.service.bookRoom({ room_id,
+            email,
+            ckeck_in,
+            ckeck_out,
+            cost
+        });
+
+        room === null ? next(new Error("Not found")) : res.send(room);
+    }
+
+    async getEstimation(req, res, next) {
+        const {
+            roomId,
+            login,
+        } = req.body;
+
+        const estimation = await this.service.getEstimation(roomId, login);
+
+        res.send(estimation);
+    }
+
+    async addEstimations(req, res, next) {
+        const {
+            roomId,
+            estimation,
+            login,
+        } = req.body;
+
+        const allEstimations = await this.service.addEstimations({
+            room_id: roomId,
+            estimation,
+            user_login: login
+        });
+
+        res.send(allEstimations);
+    }
+
     async addRoom(req, res, next) {
         const {
             status_id,
@@ -29,8 +88,6 @@ class RoomController{
             square,
             floor
         } = req.body;
-
-        console.log(req.body);
 
         const result = await this.service.addRoom({
             status_id,

@@ -1,71 +1,62 @@
-.booking-container {
-    display: flex;
-    padding: 60px;
-    background: white;
-    box-sizing: border-box;
-    position: relative;
-  }
-  .content-field {
-    display: flex;
-    margin-right: 20%;
-    font-family: Century Gothic;
-    flex-direction: column;
-  }
-  span.content-field__title {
+
+.content-field {
+  display: flex;
+  margin-right: 10%;
+  font-family: Century Gothic;
+  flex-direction: column;
+
+  .content-field__title {
     font-size: 35px;
-    margin-bottom: 10px;
+    margin: 20px 0;
     text-transform: uppercase;
-  }
-  .booking-form {
-    display: flex;
-    flex-wrap: wrap;
+    padding: 10px 0;
+    border-bottom: 1px solid gray;
   }
 
-  .book-button {
-    right: 50px;
-    width: 70px;
-    position: absolute;
-    bottom: 100px;
+  .content-field__description {
+    text-transform: uppercase;
+    font-size: 18px;
+    margin: 5px 0;
   }
 
-  .booking-form__button.booking-form__button--check-in {
-    flex-basis: 45%;
+  .content-field__list {
+    margin: 10px 0;
+
+    .list__item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+
+      .item__icon {
+        max-width: 8%;
+        margin-right: 10px;
+      }
+    }
   }
-  .booking-form__counter {
-    flex-basis: 45%;
-    margin-bottom: 100px;
+}
+
+.booking-form {
+  display: flex;
+  flex-wrap: wrap;
+  width: 60%;
+
+  .booking-form__buttons-container {
+    display: flex;
+    margin: 25px 10px;
   }
-  .check__signature {
-    border-bottom: 1px solid black;
-    padding-bottom: 6px;
-    margin-bottom: 10px;
-    font-size: 20px;
-    font-family: Century Gothic;
-    text-transform: uppercase;
-  }
-  .check__signature.check__signature--check-in {
-    max-width: 60%;
-  }
-  .booking-form__button {
-    margin-bottom: 50px;
-  }
-  .counter {
-    margin-top: 10px;
-  }
-  input.counter__value {
-    margin: 5px;
-    max-width: 20%;
-    height: 30px;
-    background: none;
-    border: 1px solid black;
-  }
-  span.counter__decrement {
-    cursor: pointer;
-    padding: 10px;
-    font-size: 35px;
-  }
-  span.counter__increment {
-    cursor: pointer;
-    padding: 10px;
-    font-size: 25px;
-  }
+}
+
+.book-button {
+  width: 100%;
+}
+
+.book-button--final {
+  margin: 20px;
+}
+
+.counter__change-button {
+  font-size: 25px;
+  padding: 7px;
+  cursor: pointer;
+  color: #941a1a;
+}

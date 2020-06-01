@@ -1,0 +1,26 @@
+@changeButtons: {
+    max-width: 10%;
+    position: absolute;
+    top: 42%;
+}
+
+.slider-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    .slider-container__slider-item {
+        max-width: 100%;
+    }
+    
+    .slider-container__change-button--left {
+        @changeButtons();
+        left: 2%;
+    }
+
+    .slider-container__change-button--right {
+        @changeButtons();
+        right: 2%;
+    }
+}

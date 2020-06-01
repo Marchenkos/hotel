@@ -7,8 +7,8 @@ const schema = new Schema({
     estimation: {
         type: Number
     },
-    user_id: {
-        type: Number
+    user_login: {
+        type: String
     },
 });
 

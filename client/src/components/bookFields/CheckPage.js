@@ -1,92 +1,72 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable camelcase */
 import React, { useEffect, useState, useCallback } from "react";
+import debounce from "lodash.debounce";
 import * as $ from "jquery";
-import cookie from "react-cookies";
 import * as moment from "moment";
 
 import "../../style/booking-container.less";
 import "../../style/check-page.less";
 import Modal from "../modalWindows/Modal";
+import { constants } from "../../constants";
 
 import { CatalogButton } from "../../style/custom-components/Buttons";
 
-export default function CheckPage({ roomId, bookingData, guestsCount }) {
-    const [userInfo, setUserInfo] = useState([]);
-    const [roomInfo, setRoomInfo] = useState([]);
+export default function CheckPage({ history, room, checkIn, checkOut, user, personsCount }) {
+    const [userInfo, setUserInfo] = useState({});
     const [modalWindow, setModalWindow] = useState(0);
 
     const closeModal = useCallback(() => {
         setModalWindow(0);
     }, [modalWindow]);
 
-    useEffect(() => {
-        const isLogin = cookie.load("jwtToken");
-
-        const userData = {
-            jwt: isLogin
-        };
-
-
-        $.ajax({
-            type: "POST",
-            url: "http://hotel/api/getUser.php",
-            dataType: "json",
-            data: JSON.stringify(userData),
-            success: response => {
-                setUserInfo(response.result);
-            }
-        });
-    }, []);
-
-    useEffect(() => {
-        const roomData = {
-            room_id: roomId
-        };
-
-        $.ajax({
-            type: "POST",
-            url: "http://hotel/api/getRoom.php",
-            dataType: "json",
-            data: JSON.stringify(roomData),
-            success: response => {
-                setRoomInfo(response.room);
-            }
-        });
-    }, []);
-
     const calculateCost = () => {
-        return (moment(bookingData[bookingData.length - 1]).diff(moment(bookingData[0]), "days") + 1) * Number(roomInfo.cost);
+        return (moment(checkOut).diff(moment(checkIn), "days") + 1) * Number(room.cost);
     };
 
-    const onSaveData = () => {
-        const isLogin = cookie.load("jwtToken");
-        const bookingDataInf = {
-            jwt: isLogin,
-            room_id: Number(roomId),
-            check_in: bookingData[0],
-            check_out: bookingData[bookingData.length - 1],
-            cost: calculateCost(),
-            guests: guestsCount,
-            hotel_id: 2
-        };
+    const redirectToHome = debounce(() => {
+        history.push("/hotels");
+    }, constants.REDIRECT_PAUSE);
 
-        console.log(bookingDataInf);
+    const onSaveData = useCallback(() => {
+        const url = "http://localhost:3000/room/book-room";
 
         $.ajax({
             type: "POST",
-            url: "http://hotel/api/bookApartments.php",
+            url,
             dataType: "json",
-            data: JSON.stringify(bookingDataInf),
+            data: {
+                room_id: room.room_id,
+                email: userInfo.email,
+                ckeck_in: checkIn,
+                ckeck_out: checkOut,
+                cost: calculateCost(),
+            },
             success: response => {
-                if (response.message) {
+                if (response) {
                     setModalWindow(4);
                 } else {
                     setModalWindow(6);
                 }
             }
         });
-    };
+
+        redirectToHome();
+    }, [userInfo]);
+
+    useEffect(() => {
+        const url = "http://localhost:3000/user/get-user";
+
+        $.ajax({
+            type: "POST",
+            url,
+            dataType: "json",
+            data: {
+                login: user,
+            },
+            success: response => {
+                setUserInfo(response[0]);
+            }
+        });
+    }, []);
 
     return (
         <div className="check-list-container">
@@ -100,7 +80,7 @@ export default function CheckPage({ roomId, bookingData, guestsCount }) {
                     <div className="block">
                         <span className="block__signature">name</span>
                         <span className="block__value">
-                            {`${userInfo.first_name} ${userInfo.last_name}`}
+                            {`${userInfo.firstName} ${userInfo.lastName}`}
                         </span>
                     </div>
 
@@ -116,14 +96,14 @@ export default function CheckPage({ roomId, bookingData, guestsCount }) {
                     <div className="block">
                         <span className="block__signature">status</span>
                         <span className="block__value">
-                            {roomInfo.status_id}
+                            {room.status_id}
                         </span>
                     </div>
 
                     <div className="block">
                         <span className="block__signature">square</span>
                         <span className="block__value">
-                            {roomInfo.square}
+                            {room.square}
                             sqm
                         </span>
                     </div>
@@ -131,14 +111,7 @@ export default function CheckPage({ roomId, bookingData, guestsCount }) {
                     <div className="block">
                         <span className="block__signature">floor</span>
                         <span className="block__value">
-                            {roomInfo.floor}
-                        </span>
-                    </div>
-
-                    <div className="block">
-                        <span className="block__signature">bed</span>
-                        <span className="block__value">
-                            {roomInfo.bed}
+                            {room.floor}
                         </span>
                     </div>
                 </div>
@@ -146,14 +119,21 @@ export default function CheckPage({ roomId, bookingData, guestsCount }) {
                     <div className="block">
                         <span className="block__signature">check in</span>
                         <span className="block__value">
-                            {bookingData[0]}
+                            {checkIn}
                         </span>
                     </div>
 
                     <div className="block">
                         <span className="block__signature">check out</span>
                         <span className="block__value">
-                            {bookingData[bookingData.length - 1]}
+                            {checkOut}
+                        </span>
+                    </div>
+
+                    <div className="block">
+                        <span className="block__signature">persons count</span>
+                        <span className="block__value">
+                            {personsCount}
                         </span>
                     </div>
 
@@ -169,7 +149,7 @@ export default function CheckPage({ roomId, bookingData, guestsCount }) {
                 </div>
             </div>
 
-            <CatalogButton bg className="book-button" onClick={onSaveData}>book now</CatalogButton>
+            <CatalogButton bg className="book-button--final" onClick={onSaveData}>book now</CatalogButton>
             {
                 modalWindow !== 0 ? <Modal message={modalWindow} closeModal={closeModal} /> : null
             }

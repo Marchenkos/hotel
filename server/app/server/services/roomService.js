@@ -10,13 +10,27 @@ class RoomService {
     }
 
     async findSpecifyRoom(condition) {
-        const findedRoom = await this.repository.findOne(condition);
+        return await this.repository.findOne(condition);
+    }
 
-        return findedRoom;
+    async getEstimation(roomId, login) {
+        return await this.repository.getEstimation({room_id: roomId, user_login: login});
+    } 
+
+    async addEstimations(estimation) {
+        return await this.repository.addEstimations(estimation);
+    }
+
+    async findBookedRoom(condition) {
+        return await this.repository.findBookedDate(condition);
     }
 
     async addRoom(newRoom) {
         return await this.repository.addRoom(newRoom);
+    }
+
+    async bookRoom(bookedRoom) {
+        return await this.repository.bookRoom(bookedRoom);
     }
 
     // async deleteRoomByName(name) {
