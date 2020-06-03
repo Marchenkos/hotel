@@ -1,3 +1,5 @@
+@import "./constants.less";
+
 .main-room-block {
   width: 100%;
   position: relative;
@@ -10,6 +12,11 @@
     position: absolute;
     align-items: center;
     font-family: Didot;
+
+    @media (max-width: @tablet) {
+      left: 15%;
+      width: 70%;
+    }
   }
 }
 
@@ -17,12 +24,21 @@
   display: flex;
   padding: 40px 20px;
   justify-content: space-evenly;
+  align-items: center;
+
+  @media (max-width: @tablet) {
+    flex-direction: column;
+  }
 
   .room-main-container__description {
     font-family: Century Gothic;
     font-size: 16px;
     width: 38%;
     line-height: 1.4;
+
+    @media (max-width: @tablet) {
+      width: 98%;
+    }
 
     .room-description__title {
       margin: 10px 0;
@@ -31,6 +47,10 @@
 
   .room-main-container__picture {
     max-width: 50%;
+  
+    @media (max-width: @tablet) {
+      display: none;
+    }
   }
 }
   .floor-plan {
@@ -38,11 +58,20 @@
     position: relative;
     display: flex;
     flex-wrap: wrap;
+
+    @media (max-width: @tablet) {
+      padding: 0;
+    }
   }
 
   .floor-plan__picture {
     max-width: 55%;
     flex-basis: 45%;
+
+    @media (max-width: @tablet) {
+      max-width: 98%;
+      margin-bottom: 20px;
+    }
   }
 
   .floor-plan__description {
@@ -54,6 +83,10 @@
     flex-basis: 40%;
     line-height: 1.4;
     box-sizing: border-box;
+
+    @media (max-width: @tablet) {
+      display: none;
+    }
   }
 
   .floor-plan__rectangle {
@@ -61,6 +94,10 @@
     top: 30%;
     right: 10%;
     z-index: -1;
+
+    @media (max-width: @tablet) {
+      display: none;
+    }
   }
 
   .estimate-contsiner {
@@ -79,6 +116,10 @@
   .slider-block {
     width: 80%;
     margin: 50px auto;
+
+    @media (max-width: @tablet) {
+      width: 100%;
+    }
   }
 
   .room-services {
@@ -91,6 +132,10 @@
     .service-icon {
       max-width: 20%;
       margin: 20px;
+
+      @media (max-width: @tablet) {
+        max-width: 50%;
+      }
     }
   }
 
@@ -101,4 +146,33 @@
   font-family: Century Gothic;
   text-transform: uppercase;
   margin-bottom: 70px;
+
+  @media (max-width: @tablet) {
+    font-size: 33px;
+    margin-bottom: 0px;
+  }
+}
+
+.rooms__message-result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+
+  @media (max-width: @tablet) {
+    margin: 0 auto;
+    width: 80%;
+    text-align: center;
+  }
+
+  .message-result__title {
+    color: #363636;
+  }
+
+  .message-result__link {
+    color: #513b6d;
+    cursor: pointer;
+    text-decoration: underline;
+  }
 }

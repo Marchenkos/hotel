@@ -10,6 +10,7 @@ export const ServiceSectionContainer = styled.div`
     -ms-flexbox-wrap: wrap; 
 
     display: flex;
+    align-items: center;
     flex-direction: row;
     padding: 20px;
     justify-content: space-evenly;
@@ -24,6 +25,7 @@ export const ServiceSectionContainer = styled.div`
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        padding: 10px;
     }
 `;
 

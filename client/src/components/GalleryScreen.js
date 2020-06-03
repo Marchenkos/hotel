@@ -37,7 +37,7 @@ export default function GalleryScreen() {
         <>
             <div className="gallery-container">
                 <TitleText className="wow fadeIn" data-wow-offset="50" data-wow-delay="0.5s" white>
-                Gallery
+                    Gallery
                 </TitleText>
                 <div className="gallery">
                     {gallery}

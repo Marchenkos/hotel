@@ -14,6 +14,11 @@
 }
 
 @font-face {
+    font-family: Poiret One;
+    src: url(./fonts/PoiretOne.ttf);
+}
+
+@font-face {
     font-family: Lato Light;
     src: url(./fonts/Lato-Light.ttf);
 }

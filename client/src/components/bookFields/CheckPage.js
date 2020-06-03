@@ -12,11 +12,12 @@ import { CatalogButton } from "../../style/custom-components/Buttons";
 
 export default function CheckPage({ history, room, checkIn, checkOut, user, personsCount }) {
     const [userInfo, setUserInfo] = useState({});
-    const [modalWindow, setModalWindow] = useState(0);
+    const [modalMessage, setModalMessage] = useState(null);
+    const [isErrorMessage, setIsErrorMessage] = useState(false);
 
-    const closeModal = useCallback(() => {
-        setModalWindow(0);
-    }, [modalWindow]);
+    const closeMessageModal = useCallback(() => {
+        setModalMessage(null);
+    }, []);
 
     const calculateCost = () => {
         return (moment(checkOut).diff(moment(checkIn), "days") + 1) * Number(room.cost);
@@ -42,9 +43,11 @@ export default function CheckPage({ history, room, checkIn, checkOut, user, pers
             },
             success: response => {
                 if (response) {
-                    setModalWindow(4);
+                    setIsErrorMessage(false);
+                    setModalMessage(constants.SUCCESS_MESSAGE.SUCCESS_BOOKING);
                 } else {
-                    setModalWindow(6);
+                    setIsErrorMessage(true);
+                    setModalMessage(constants.ERROR_MESSAGE.INVALID_DATA);
                 }
             }
         });
@@ -151,7 +154,7 @@ export default function CheckPage({ history, room, checkIn, checkOut, user, pers
 
             <CatalogButton bg className="book-button--final" onClick={onSaveData}>book now</CatalogButton>
             {
-                modalWindow !== 0 ? <Modal message={modalWindow} closeModal={closeModal} /> : null
+                modalMessage ? <Modal message={modalMessage} isError={isErrorMessage} closeModal={closeMessageModal} /> : null
             }
         </div>
     );

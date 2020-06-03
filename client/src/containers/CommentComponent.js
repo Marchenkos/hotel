@@ -4,7 +4,7 @@ import CommentList from "../components/comments/CommentList";
 
 const mapStateToProps = state => {
     return {
-        currentUser: state.user.currentUser
+        jwt: state.user.jwt
     };
 };
 

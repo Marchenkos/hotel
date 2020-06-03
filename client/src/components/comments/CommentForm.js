@@ -32,6 +32,7 @@ export default function CommentForm({ onSend }) {
             },
             success: response => {
                 console.log(response.message);
+                contentRef.current.value = "";
             }
         });
 

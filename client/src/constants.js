@@ -15,6 +15,20 @@ export const constants = {
         "November",
         "December"
     ],
+    ERROR_MESSAGE: {
+        EMPTY_FIELDS: "Fill all fields please",
+        DIF_PASSOWRDS: "Passwords don't match",
+        INVALID_NAME: "No correct firstname or lastname",
+        INVALID_EMAIL: "Invalid email",
+        LOGIN_ERROR: "No correct login or password",
+        FILTER_ERROR: "Sorry, we don't have rooms for your request",
+        INVALID_DATA: "No correct data",
+    },
+    SUCCESS_MESSAGE: {
+        SUCCESS_REGISTRATION: "Registration completed successfully",
+        SUCCESS_LOGIN: "Login completed successfully",
+        SUCCESS_BOOKING: "Booking completed successfully",
+    },
     errorMessage: [
         "Fill all fields please",
         "Passwords don't match",

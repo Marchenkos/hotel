@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { useRef, useCallback, useState } from "react";
 import * as $ from "jquery";
 
@@ -9,6 +8,7 @@ import { FormButton } from "../style/custom-components/Buttons";
 import { Input } from "../style/custom-components/Input";
 import { Form } from "../style/custom-components/Form";
 import Modal from "./modalWindows/Modal";
+import { constants } from "../constants";
 
 export default function RegistrationForm() {
     const loginRef = useRef(null);
@@ -17,24 +17,46 @@ export default function RegistrationForm() {
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
     const confirmedPassword = useRef(null);
-    const [modalWindow, setModalWindow] = useState(0);
+    const [modalMessage, setModalMessage] = useState(null);
+    const [isErrorMessage, setIsErrorMessage] = useState(false);
+    const regFormRef = useRef(null);
 
     const closeModal = useCallback(() => {
-        setModalWindow(0);
-    }, [modalWindow]);
+        setModalMessage(null);
+    }, []);
+
+    const validateEmail = email => {
+        const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        return re.test(email);
+    };
 
     const onsubmitForm = e => {
         e.preventDefault();
+        const loginValue = loginRef.current.value;
+        const passwordValue = passwordRef.current.value;
+        const confirmPasswordValue = confirmedPassword.current.value;
+        const emailValue = emailRef.current.value;
+        const nameValue = nameRef.current.value;
+        const lastNameValue = lastNameRef.current.value;
 
-        if (!loginRef.current.value && !nameRef.current.value && !lastNameRef.current.value
-           && !emailRef.current.value && !passwordRef.current.value) {
-            setModalWindow(1);
+        if (!loginValue && !nameValue && !lastNameValue
+           && !emailValue && !passwordValue) {
+            setModalMessage(constants.ERROR_MESSAGE.EMPTY_FIELDS);
+            setIsErrorMessage(true);
 
             return;
         }
 
-        if (confirmedPassword.current.value !== passwordRef.current.value) {
-            setModalWindow(2);
+        if (confirmPasswordValue !== passwordValue) {
+            setModalMessage(constants.ERROR_MESSAGE.DIF_PASSOWRDS);
+            setIsErrorMessage(true);
+
+            return;
+        }
+
+        if (!validateEmail(emailValue)) {
+            setModalMessage(constants.ERROR_MESSAGE.INVALID_EMAIL);
+            setIsErrorMessage(true);
 
             return;
         }
@@ -46,30 +68,37 @@ export default function RegistrationForm() {
             url,
             dataType: "json",
             data: {
-                login: loginRef.current.value,
-                firstName: nameRef.current.value,
-                lastName: lastNameRef.current.value,
-                email: emailRef.current.value,
-                password: passwordRef.current.value
+                login: loginValue,
+                firstName: nameValue,
+                lastName: lastNameValue,
+                email: emailValue,
+                password: passwordValue
             },
             success: response => {
                 console.log(response);
 
-                setModalWindow(4);
+                if (response.result) {
+                    setIsErrorMessage(false);
+                    setModalMessage(constants.SUCCESS_MESSAGE.SUCCESS_REGISTRATION);
+                    regFormRef.current.reset();
+                } else {
+                    setIsErrorMessage(true);
+                    setModalMessage(response.message);
+                }
             }
         });
     };
 
     return (
         <div className="regist-form">
-            <Form>
-                <div className="slider">
-                    <section className="slider__item">
+            <Form ref={regFormRef}>
+                <div className="regist-form__section">
+                    <section className="register-section__item">
                         <Input className="form__input" placeholder="login" name="login" ref={loginRef} />
                         <Input className="form__input" placeholder="name" name="userName" ref={nameRef} />
                         <Input className="form__input" placeholder="lastName" name="lastName" ref={lastNameRef} />
                     </section>
-                    <section className="slider__item">
+                    <section className="register-section__item">
                         <Input className="form__input" placeholder="email" name="email" ref={emailRef} />
                         <Input className="form__input" type="password" name="password" placeholder="password" ref={passwordRef} />
                         <Input className="form__input" placeholder="confirm password" type="password" name="confirmedPassword" ref={confirmedPassword} />
@@ -78,7 +107,7 @@ export default function RegistrationForm() {
                 <FormButton type="submit" onClick={onsubmitForm} inForm>Registration</FormButton>
             </Form>
             {
-                modalWindow !== 0 ? <Modal message={modalWindow} closeModal={closeModal} /> : null
+                modalMessage ? <Modal message={modalMessage} isError={isErrorMessage} closeModal={closeModal} /> : null
             }
         </div>
     );

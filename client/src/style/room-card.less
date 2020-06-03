@@ -35,8 +35,9 @@
 
     .room-card__text-block {
         box-sizing: content-box;
-        padding: 20px;
+        padding: 0px 20px;
         display: flex;
+        align-self: stretch;
         flex-direction: column;
         justify-content: flex-start;
         flex-basis: 50%;
@@ -46,8 +47,9 @@
         }
 
         .text-block__title {
-            font-size: 45px;
+            font-size: 39px;
             margin-bottom: 20px;
+            font-family: Bodidota;
 
             @media (min-width: @tablet) and (max-width: @desktop){
                 font-size: 25px;
@@ -62,7 +64,9 @@
         .text-block__signature {
             font-size: 20px;
             flex-grow: 1;
-            color: #333333;
+            font-weight: 700;
+            color: #683838;
+            font-family: Century Gothic;
 
             @media (min-width: @tablet) and (max-width: @desktop){
                 font-size: 17px;
@@ -74,11 +78,19 @@
         }
 
         .text-block__description {
-            font-size: 20px;
+            font-size: 17px;
             line-height: 1.2;
+            margin-top: 10px;
+            width: 90%;
+            font-family: Century Gothic;
 
             @media (min-width: @tablet) and (max-width: @desktop){
-                font-size: 15px;
+                font-size: 12px;
+                width: 88%;
+            }
+
+            @media (max-width: @tablet){
+                width: 100%;
             }
         }
     }

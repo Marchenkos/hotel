@@ -16,7 +16,7 @@ class UserController{
             login
         } = req.body;
 
-        const user = await this.service.findUser(login);
+        const user = await this.service.findUser({ login: login });
 
         user ? res.send(user) : next(new Error("Not found"));
     }
@@ -26,7 +26,7 @@ class UserController{
 
         const newUser = await this.service.addUser(newUserData);
 
-        newUser ? res.send(newUser) : next(new Error("Registration was falled out"));
+        res.send(newUser);
     }
 
     async checkUser(req, res, next) {
@@ -34,7 +34,8 @@ class UserController{
         const isCompare = await this.service.checkUser(login, password);
 
         isCompare ? res.send({message: "Success",
-        jwt: isCompare}) : next(new Error("No correct login or password"));
+        jwt: isCompare}) : res.send({message: "No correct login or password",
+        jwt: false});
     }
 }
 

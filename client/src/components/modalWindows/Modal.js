@@ -1,27 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import "../../style/modal-window.less";
 
-import { constants } from "../../constants";
 
-export default function Modal({ closeModal, message }) {
+export default function Modal({ closeModal, message, isError }) {
     setTimeout(() => {
         closeModal(0);
-    }, 1000);
+    }, 2000);
 
     return (
         <>
             {
-                message === 4 ? (
-                    <div className="modal-window modal-window__success">
+                !isError ? (
+                    <div className="wow fadeIn modal-window modal-window__success">
                         {
-                            constants.errorMessage[message - 1]
+                            message
                         }
                     </div>
                 ) : (
                     <div className="modal-window modal-window__error">
                         {
-                            constants.errorMessage[message - 1]
+                            message
                         }
                     </div>
                 )

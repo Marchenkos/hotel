@@ -3,13 +3,19 @@ import * as $ from "jquery";
 
 import "../style/catalog-container.less";
 import catalogRoom from "../img/catalog3.jpg";
+import BannerBlock from "./BannerBlock";
+
 import RoomCard from "./RoomCard";
 import Filter from "./Filter";
+import { MainText, AdditionalText, TitleText } from "../style/conponent-style/textBlocks";
+import { constants } from "../constants";
 
 import "../style/fonts/style.css";
 
-export default function RoomCatalog({ allRooms, getRoomsList, setFilterRoomsList, filterRooms }) {
+export default function RoomCatalog({ allRooms, getRoomsList, location }) {
     const [isShowFilter, setIsShowFilter] = useState(false);
+    const [filterRooms, setFilterRooms] = useState([]);
+
     const [roomsCatalog, setRoomsCatalog] = useState([]);
     const [isScroll, setIsScroll] = useState(false);
 
@@ -48,7 +54,7 @@ export default function RoomCatalog({ allRooms, getRoomsList, setFilterRoomsList
         }
     });
 
-    const useFilter = useCallback(() => {
+    const showFilter = useCallback(() => {
         setIsShowFilter(!isShowFilter);
     }, []);
 
@@ -60,17 +66,26 @@ export default function RoomCatalog({ allRooms, getRoomsList, setFilterRoomsList
         getRoomsList(roomsCatalog);
     }, [roomsCatalog]);
 
+    const reloadPage = () => {
+        window.location.reload();
+    };
 
     const renderContentList = useCallback(() => {
-        // if (!filterRooms) {
-        //     return (
-        //         <div>
-        //             Ooops, we don't have rooms, like this..
-        //         </div>
-        //     );
-        // }
+        if (!filterRooms) {
+            return (
+                <div className="rooms__message-result">
+                    <TitleText inContent className="message-result__title">Sorry</TitleText>
+                    <AdditionalText inContent>
+                        We dont have rooms for you request.
+                        <span className="message-result__link" onClick={reloadPage}>
+                            Check other rooms
+                        </span>
+                    </AdditionalText>
+                </div>
+            );
+        }
 
-        if (!filterRooms || filterRooms.length === 0) {
+        if (filterRooms.length === 0) {
             return allRooms.map((item, index) => (
                 <RoomCard
                     key={index}
@@ -97,12 +112,11 @@ export default function RoomCatalog({ allRooms, getRoomsList, setFilterRoomsList
     }, [filterRooms, allRooms]);
 
     const resetFilter = useCallback(() => {
-        setFilterRoomsList([]);
+        setFilterRooms([]);
     }, []);
 
     const applyFilter = useCallback(filterConditions => {
         resetFilter([]);
-        setIsShowFilter(false);
 
         let filterCostRoomsList = [];
         let filterStatusRoomsList = [];
@@ -122,12 +136,22 @@ export default function RoomCatalog({ allRooms, getRoomsList, setFilterRoomsList
                         return item;
                     }
                 });
+
+                if (filterCostRoomsList.length < 1) {
+                    setFilterRooms(null);
+                    console.log("HAHA");
+
+                    hideFilter();
+
+                    return null;
+                }
             }
 
-            const firstFilterResult = filterCostRoomsList.length > 0 ? filterCostRoomsList : allRooms;
+            const costFilterResult = filterCostRoomsList.length > 0 ? filterCostRoomsList : allRooms;
+            filterStatusRoomsList = costFilterResult;
 
             if (filterConditions.classic || filterConditions.comform || filterConditions.prestige) {
-                filterStatusRoomsList = firstFilterResult.filter(item => {
+                filterStatusRoomsList = costFilterResult.filter(item => {
                     if (filterConditions.classic && item.status_id === "classic") {
                         return item;
                     }
@@ -140,36 +164,27 @@ export default function RoomCatalog({ allRooms, getRoomsList, setFilterRoomsList
                         return item;
                     }
                 });
-
-                filterStatusRoomsList = filterStatusRoomsList.length === 0 ? null : filterStatusRoomsList;
+            } else {
+                filterStatusRoomsList = null;
             }
 
-            const result = filterStatusRoomsList.length > 0 ? filterStatusRoomsList : null;
-
-            setFilterRoomsList(result);
+            setFilterRooms(filterStatusRoomsList);
+            hideFilter();
         }
     }, [allRooms]);
 
     return (
         <div className="catalog-container">
             <div className="catalog-container__welcom-block">
-                <img src={catalogRoom} alt="catalog" className="welcom-block__picture" />
-                <span className="welcom-block__title">
-                        The Mountain Suite Collection
-                </span>
-                <div className="welcom-block__description">
-                        Every one of our rooms is a suite, complete with a living room as
-                        well as separate sleeping area and spacious
-                        Italian marble bathroom. With comfort considered in each detail, every suite ensures a good night’s sleep.
-                </div>
+                <BannerBlock firstBg={catalogRoom} title="the best rooms collection" description="feel like a celebrity" />
             </div>
 
             <div className="catalog">
-                <div className="catalog__title">
-                    Most Popular Suites
-                </div>
+                <MainText inContent className="catalog__title">
+                    Most Popular Rooms
+                </MainText>
                 <div className="catalog__description">
-                    Nearly double the size of your average Las Vegas hotel room, our standard Switherland hotel
+                    Nearly double the size of your average Las Vegas hotel room, our standard Austia hotel
                     suites have everything you need and more. Celebrity Radio UK calls them divine… elegant,
                     spacious, perfectly designed and offer the epitome of decadence, indulgence, and luxury.” We totally agree.
                 </div>
@@ -178,7 +193,7 @@ export default function RoomCatalog({ allRooms, getRoomsList, setFilterRoomsList
                     {renderContentList()}
                 </div>
             </div>
-            {isScroll ? <div className="icon-filter filter-catalog" onClick={useFilter} /> : null}
+            {isScroll ? <div className="icon-filter filter-catalog" onClick={showFilter} /> : null}
             {isShowFilter ? <Filter isShow={isShowFilter} hideFilter={hideFilter} resetFilter={resetFilter} applyFilter={applyFilter} /> : null}
         </div>
     );

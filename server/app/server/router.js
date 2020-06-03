@@ -43,15 +43,6 @@ class Router {
         this.commentRouter.post("/save-comment", this.comment.saveComments.bind(this.comment));
     }
 
-    // cardRequests() {
-    //     this.cardRouter.get("/", this.card.getAll.bind(this.card));
-    //     this.cardRouter.get("/:name", this.card.getSpecifyCard.bind(this.card));
-    //     this.cardRouter.post("/", this.card.addCard.bind(this.card));
-    //     this.cardRouter.delete("/remove/:name", this.card.deleteCardByName.bind(this.card));
-    //     this.cardRouter.delete("/removeAll/:name", this.card.deleteAllCards.bind(this.card));
-    //     this.cardRouter.put("/refresh/:name", this.card.updateCard.bind(this.card));
-    // }
-
     userRequests() {
         this.userRouter.get("/", this.user.getAll.bind(this.user));
         this.userRouter.post("/get-user", this.user.findUser.bind(this.user));

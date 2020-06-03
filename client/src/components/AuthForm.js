@@ -1,8 +1,9 @@
 import React, { useRef, useState, useCallback } from "react";
 import * as $ from "jquery";
 import cookie from "react-cookies";
+import debounce from "lodash.debounce";
 
-import SuccesModal from "./modalWindows/SuccessModal";
+import Modal from "./modalWindows/Modal";
 import { FormButton } from "../style/custom-components/Buttons";
 import { Input } from "../style/custom-components/Input";
 import { Form } from "../style/custom-components/Form";
@@ -10,25 +11,39 @@ import { constants } from "../constants";
 import "../style/regist-form.less";
 import "../style/error-message.less";
 
-export default function AuthForm({ changeUser }) {
-    const [isSuccessAuth, setIsSuccessAuth] = useState(false);
+export default function AuthForm({ changeUser, closeModalForm }) {
     const loginRef = useRef(null);
     const passwordRef = useRef(null);
-    const duplicatePassword = useRef(null);
-    const [isErrorMessage, setIsErrorMessage] = useState(null);
+    const confirmedPassword = useRef(null);
+    const [modalMessage, setModalMessage] = useState(null);
+    const [isErrorMessage, setIsErrorMessage] = useState(false);
+
     const authFormRef = useRef(null);
+
+    const closeAuthModal = debounce(() => {
+        closeModalForm();
+    }, 2000);
+
+    const closeMessageModal = useCallback(() => {
+        setModalMessage(null);
+    }, []);
 
     const onsubmitForm = useCallback((e) => {
         e.preventDefault();
+        const loginValue = loginRef.current.value;
+        const passwordValue = passwordRef.current.value;
+        const confirmPasswordValue = confirmedPassword.current.value;
 
-        if (!loginRef.current.value && !passwordRef.current.value && !duplicatePassword.current.value) {
-            setIsErrorMessage(1);
+        if (!loginValue && !passwordValue && !confirmPasswordValue) {
+            setModalMessage(constants.ERROR_MESSAGE.EMPTY_FIELDS);
+            setIsErrorMessage(true);
 
             return;
         }
 
-        if (passwordRef.current.value !== duplicatePassword.current.value) {
-            setIsErrorMessage(2);
+        if (passwordValue !== confirmPasswordValue) {
+            setModalMessage(constants.ERROR_MESSAGE.DIF_PASSOWRDS);
+            setIsErrorMessage(true);
 
             return;
         }
@@ -39,13 +54,13 @@ export default function AuthForm({ changeUser }) {
             type: "POST",
             url,
             data: {
-                login: loginRef.current.value,
-                password: passwordRef.current.value
+                login: loginValue,
+                password: passwordValue
             },
             success: response => {
                 console.log(response);
 
-                if (response.message) {
+                if (response.jwt) {
                     changeUser(loginRef.current.value, response.jwt);
 
                     const expires = new Date();
@@ -65,37 +80,29 @@ export default function AuthForm({ changeUser }) {
                         { expires }
                     );
 
-                    setIsSuccessAuth(true);
+                    setIsErrorMessage(false);
+                    setModalMessage(constants.SUCCESS_MESSAGE.SUCCESS_LOGIN);
+                    closeAuthModal();
                 } else {
-                    setIsErrorMessage(5);
+                    setIsErrorMessage(true);
+                    setModalMessage(constants.ERROR_MESSAGE.LOGIN_ERROR);
                 }
             }
         });
-
-        if (setIsErrorMessage === 0) {
-            authFormRef.current.reset();
-        }
     }, []);
 
     return (
         <div className="auth-form">
             <Form ref={authFormRef}>
-                {isErrorMessage ? (
-                    <div className="error-message">
-                        {
-                            constants.errorMessage[isErrorMessage - 1]
-                        }
-                    </div>
-                ) : null}
                 <Input className="form__input" placeholder="login" name="login" ref={loginRef} />
                 <Input className="form__input" type="password" name="password" placeholder="password" ref={passwordRef} />
-                <Input className="form__input" type="password" name="password" placeholder="Confirm password" ref={duplicatePassword} />
+                <Input className="form__input" type="password" name="password" placeholder="Confirm password" ref={confirmedPassword} />
 
                 <FormButton type="submit" onClick={onsubmitForm} inForm>log in</FormButton>
             </Form>
-            <div className="auth-form__success-modal">
-                {isSuccessAuth ? <SuccesModal /> : null}
-            </div>
+            {
+                modalMessage ? <Modal message={modalMessage} isError={isErrorMessage} closeModal={closeMessageModal} /> : null
+            }
         </div>
     );
 }

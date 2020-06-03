@@ -33,11 +33,11 @@ export default function AuthBlock({ onChangeUser, setShowAuthForm, showAuthForm 
 
     const chooseAuthForm = useCallback(() => {
         setChooseAuthdForm(true);
-    }, [choosedAuthForm]);
+    }, []);
 
     const unchooseAuthForm = useCallback(() => {
         setChooseAuthdForm(false);
-    }, [choosedAuthForm]);
+    }, []);
 
     const closeModal = useCallback(() => {
         setShowAuthForm(false);
@@ -54,10 +54,12 @@ export default function AuthBlock({ onChangeUser, setShowAuthForm, showAuthForm 
                     <FormButton onClick={chooseAuthForm} choosed={choosedAuthForm}>sign in</FormButton>
                     <FormButton onClick={unchooseAuthForm} choosed={!choosedAuthForm}>sign up</FormButton>
                     <FormButton onClick={closeModal} last>Close</FormButton>
+                    {/* <img src="public/img/icons/crossWhite.png" alt="slider-arrow" className="user-modal__cross" onClick={closeModal} /> */}
+
                 </ButtonContainer>
 
                 {
-                    choosedAuthForm ? <AuthForm changeUser={changeUser} />
+                    choosedAuthForm ? <AuthForm changeUser={changeUser} closeModalForm={closeModal} />
                         : <RegistrationForm />
                 }
             </div>

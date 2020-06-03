@@ -6,18 +6,22 @@ import "../../style/comments/comment-item.less";
 
 export default function CommentItem({ comment }) {
     return (
-        <div className="comment-item">
-            <div className="item-header">
-                <div className="header__user">
-                    {comment.user_name}
+        <>
+            <img src="public/img/slider/quote.png" alt="quote" className="comment-quote comment-quote--left" />
+            <div className="comment-item">
+                <div className="item-header">
+                    <div className="header__user">
+                        {comment.user_name}
+                    </div>
+                    <div className="header__date">
+                        {comment.date}
+                    </div>
                 </div>
-                <div className="header__date">
-                    {comment.date}
+                <div className="item-content">
+                    {comment.message}
                 </div>
             </div>
-            <div className="item-content">
-                {comment.message}
-            </div>
-        </div>
+            <img src="public/img/slider/quoteRight.png" alt="quote" className="comment-quote comment-quote--right" />
+        </>
     );
 }
